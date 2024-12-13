@@ -9,6 +9,8 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import Provider from "./Provider";
+import { ModeToggle } from "@/components/mode-toggler";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,13 +38,21 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          <Provider>{children}</Provider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+            <ModeToggle />
+            <Provider>{children}</Provider>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
