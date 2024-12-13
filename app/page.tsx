@@ -1,12 +1,14 @@
 "use client"
 import { useContext } from 'react';
 import { UserDetails } from './_context/UserDetails';
+import Header from './_components/Header';
 
 export default function Home() {
   const { userDetails } = useContext(UserDetails);
   
   return (
     <div>
+      <Header/>
       <div>
         {userDetails ? (
           <div>
