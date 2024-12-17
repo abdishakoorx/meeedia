@@ -169,7 +169,7 @@ const Sidebar: React.FC = () => {
         </Progress>
         {!isCollapsed && (
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-            {(userDetails?.credits ?? 0) * 10}% of your tokens remaining.
+            {10 - (userDetails?.credits ?? 0)} tokens used.
           </p>
         )}
         {!isCollapsed && (userDetails?.credits ?? 0) < 3 && (
