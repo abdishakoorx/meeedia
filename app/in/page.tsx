@@ -74,16 +74,16 @@ const Dashboard = () => {
         >
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">Recent Uploads</h3>
-            <button className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200 flex items-center">
+            <Button variant={"ghost"} className="text-blue-600 dark:text-blue-400 hover:bg-transparent hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200 flex items-center">
               Upload New
               <ChevronRight className="w-4 h-4 ml-1" />
-            </button>
+            </Button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((item) => (
               <div
                 key={item}
-                className="bg-gray-100 dark:bg-gray-800 rounded-lg aspect-video flex items-center justify-center transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer"
+                className="bg-gray-200 dark:bg-gray-800 rounded-lg aspect-video flex items-center justify-center transition-all duration-200 hover:bg-gray-300 dark:hover:bg-gray-700 cursor-pointer"
               >
                 <Upload className="text-gray-400 dark:text-gray-500 w-6 h-6" />
                 <span className="ml-2 text-gray-500 dark:text-gray-400 text-sm">Empty Slot</span>

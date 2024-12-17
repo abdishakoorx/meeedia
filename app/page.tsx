@@ -1,7 +1,7 @@
 "use client"
 import { useContext } from 'react';
 import { UserDetails } from './_context/UserDetails';
-import Header from './_components/Header';
+import Header from './_components/NavHeader';
 
 export default function Home() {
   const { userDetails } = useContext(UserDetails);
