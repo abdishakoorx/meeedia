@@ -1,4 +1,4 @@
-"use clinet"
+"use client"
 
 import React, { createContext, useState, useContext, useMemo } from 'react';
 
