@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Home,
-  Users,
   Settings,
   BarChart2,
   SidebarClose,
@@ -12,6 +12,7 @@ import {
   LoaderPinwheel,
   Coins,
   X,
+  MonitorCog,
 } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { UserDetails } from "@/app/_context/UserDetails";
@@ -29,10 +30,10 @@ interface SidebarItem {
   icon: React.ReactNode;
   label: string;
   href: string;
-  active?: boolean;
 }
 
 const Sidebar: React.FC = () => {
+  const pathname = usePathname();
   const { isCollapsed, toggleSidebar } = useDashboard();
   const { userDetails } = useContext(UserDetails);
   const [isMobile, setIsMobile] = useState(false);
@@ -51,13 +52,12 @@ const Sidebar: React.FC = () => {
     {
       icon: <Home className="w-5 h-5" />,
       label: "Dashboard",
-      href: "/in/dashboard",
-      active: true,
+      href: "/in",
     },
     {
-      icon: <Users className="w-5 h-5" />,
-      label: "Team",
-      href: "/in/team",
+      icon: <MonitorCog className="w-5 h-5" />,
+      label: "Editor",
+      href: "/in/editor",
     },
     {
       icon: <BarChart2 className="w-5 h-5" />,
@@ -70,6 +70,15 @@ const Sidebar: React.FC = () => {
       href: "/in/settings",
     },
   ];
+
+  const isActiveLink = (href: string): boolean => {
+    if (href === '/in') {
+      // For dashboard, check if we're at root /in or /in/
+      return pathname === '/in' || pathname === '/in/';
+    }
+    // For other routes, check if the pathname starts with the href
+    return pathname.startsWith(href);
+  };
 
   const getSidebarClasses = () => {
     if (isMobile) {
@@ -191,16 +200,16 @@ const Sidebar: React.FC = () => {
             {(!isMobile && isCollapsed) ? <></> : <Logo />}
           </div>
 
-          <nav className="flex-1 pt-8 border-t-2 dark:border-gray-300 border-gray-600">
+          <nav className="flex-1 pt-6 border-t-2 dark:border-gray-300 border-gray-600">
             {sidebarItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={isMobile ? toggleSidebar : undefined}
-                className={`flex items-center px-4 py-3 mx-4 rounded-lg group transition duration-300 
+                className={`flex items-center px-4 py-3 mb-2 mx-4 rounded-lg group transition duration-300 
                   ${
-                    item.active
-                      ? "bg-blue-200 dark:bg-blue-800 text-blue-600 dark:text-blue-200"
+                    isActiveLink(item.href)
+                      ? "bg-secondary dark:bg-secondary-dark text-black text-lg"
                       : "text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:text-gray-800"
                   }
                   ${
