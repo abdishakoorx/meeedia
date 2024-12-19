@@ -200,7 +200,7 @@ const Sidebar: React.FC = () => {
             {(!isMobile && isCollapsed) ? <></> : <Logo />}
           </div>
 
-          <nav className="flex-1 pt-6 border-t-2 dark:border-gray-300 border-gray-600">
+          <nav className="flex-1 pt-6">
             {sidebarItems.map((item) => (
               <Link
                 key={item.href}

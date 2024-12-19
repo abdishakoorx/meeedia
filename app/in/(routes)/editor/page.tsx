@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Header from "../../_components/HeaderNameProvider";
+import FrameList from "./_components/FrameList";
 
 export default function Editor() {
   const [aspectRatio, setAspectRatio] = useState("16:9");
@@ -37,11 +38,11 @@ export default function Editor() {
   const transitions = ["None", "Fade", "Dissolve", "Wipe", "Slide", "Zoom"];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <Header headerName="Editor" />
       <div className="max-w-7xl mx-auto px-4 py-4 sm:py-8">
         <div className="mb-6 flex items-end">
-          <Button className="ml-auto w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white">
+          <Button className="ml-auto w-full sm:w-auto text-white">
             <Download className="w-5 h-5 mr-2" />
             Export
           </Button>
@@ -49,22 +50,10 @@ export default function Editor() {
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 h-auto md:h-[calc(100vh-12rem)]">
           {/* Frames */}
-          <div className="md:col-span-3 bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 overflow-y-auto max-h-96 md:max-h-full">
-            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-              Frames
-            </h2>
-            <div className="space-y-4">
-              {[...Array(10)].map((_, index) => (
-                <div
-                  key={index}
-                  className="h-24 bg-gray-200 dark:bg-gray-700 rounded"
-                ></div>
-              ))}
-            </div>
-          </div>
+          <FrameList />
 
           {/* Video Player */}
-          <div className="md:col-span-6 space-y-4">
+          <div className="md:col-span-7 space-y-4">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md aspect-video">
               <div className="h-full bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
                 <span className="text-gray-500 dark:text-gray-400">
