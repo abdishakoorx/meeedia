@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,19 +11,9 @@ import {
 } from "@/components/ui/select";
 import Header from "../../_components/HeaderNameProvider";
 import FrameList from "./_components/FrameList";
+import RemotePlayer from "./_components/RemotionPlayer";
 
 export default function Editor() {
-  const [aspectRatio, setAspectRatio] = useState("16:9");
-  const aspectRatios = [
-    "16:9",
-    "4:3",
-    "1:1",
-    "9:16",
-    "21:9",
-    "2.39:1",
-    "5:4",
-    "3:2",
-  ];
   const filters = [
     "None",
     "Grayscale",
@@ -54,25 +43,7 @@ export default function Editor() {
 
           {/* Video Player */}
           <div className="md:col-span-7 space-y-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md aspect-video">
-              <div className="h-full bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                <span className="text-gray-500 dark:text-gray-400">
-                  Video Player
-                </span>
-              </div>
-            </div>
-            <Select value={aspectRatio} onValueChange={setAspectRatio}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select aspect ratio" />
-              </SelectTrigger>
-              <SelectContent>
-                {aspectRatios.map((ratio) => (
-                  <SelectItem key={ratio} value={ratio}>
-                    {ratio}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <RemotePlayer />
           </div>
 
           {/* Video Editing Fields */}
