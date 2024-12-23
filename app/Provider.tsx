@@ -3,10 +3,12 @@ import { useUser } from "@clerk/nextjs";
 import { useCallback, useEffect, useState } from "react";
 import { UserResource } from "@clerk/types";
 import { UserDetails, UserDetailsType } from "./_context/UserDetails";
+import { FramesListContext, VideoFrameState } from "./_context/FramesListContext";
 
 function Provider({ children }: Readonly<{ children: React.ReactNode }>) {
   const { user } = useUser();
   const [userDetails, setUserDetails] = useState<UserDetailsType | null>(null);
+  const [videoFrame, setVideoFrame] = useState<VideoFrameState | null>(null);
 
   // Use useCallback to memoize the function and resolve dependency issues
   const saveUserInfo = useCallback(async (userData: UserResource) => {
@@ -46,7 +48,9 @@ function Provider({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
       <UserDetails.Provider value={{ userDetails, setUserDetails }}>
-        {children}
+        <FramesListContext.Provider value={{ videoFrame, setVideoFrame }}>
+          {children}
+        </FramesListContext.Provider>
       </UserDetails.Provider>
     </>
   );

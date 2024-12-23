@@ -1,43 +1,47 @@
 "use client";
-
 import { PlusCircle, Trash2 } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-interface Frame {
-  image: string;
-  text: string;
-  textColor: string;
-  fontSize: string;
-  duration: string;
-}
+import { Frame, useFramesList } from "@/app/_context/FramesListContext";
 
 const defaultFrame: Frame = {
   image: "/film.png",
   text: "Hello",
   textColor: "blue",
   fontSize: "20",
-  duration: "3",
+  duration: 3,
 };
 
 function FrameList() {
-  const [frameList, setFrameList] = useState<Frame[]>([defaultFrame]);
-  const [selectedFrame, setSelectedFrame] = useState<number>(0);
+  const [frameList, setFrameList] = React.useState<Frame[]>([defaultFrame]);
+  const [selectedFrame, setSelectedFrame] = React.useState<number>(0);
+  const { setVideoFrame } = useFramesList();
 
   const addNewFrame = () => {
     setFrameList((prev) => [...prev, defaultFrame]);
   };
 
   const deleteFrame = (indexToDelete: number) => {
-    const updatedFrameList = frameList.filter(
-      (_, index) => index !== indexToDelete
-    );
+    const updatedFrameList = frameList.filter((_, index) => index !== indexToDelete);
     setFrameList(updatedFrameList);
     if (selectedFrame === indexToDelete) {
       setSelectedFrame(Math.max(0, indexToDelete - 1));
     }
   };
+
+  const updateVideoFrame = useCallback(() => {
+    const totalDuration = frameList.reduce((total, frame) => total + frame.duration, 0);
+    setVideoFrame({
+      frameList,
+      totalDuration
+    });
+  }, [frameList, setVideoFrame]);
+
+  React.useEffect(() => {
+    updateVideoFrame();
+  }, [updateVideoFrame]);
+
 
   return (
     <div className="md:col-span-2 bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-4 overflow-hidden">

@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Expand } from "lucide-react";
+import { useFramesList } from "@/app/_context/FramesListContext";
 
 type ScreenSize = {
   width: number;
@@ -44,6 +45,7 @@ const scaleToFit = (dimensions: ScreenSize, maxWidth: number = 624): ScreenSize 
 function RemotePlayer() {
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [screenSize, setScreenSize] = useState(scaleToFit(aspectRatios["16:9"]));
+  const { videoFrame } = useFramesList();
 
   useEffect(() => {
     setScreenSize(scaleToFit(aspectRatios[aspectRatio]));
@@ -54,7 +56,7 @@ function RemotePlayer() {
       <div className="w-full max-w-3xl">
         <Player
           component={RemotionComposition}
-          durationInFrames={150}
+          durationInFrames={videoFrame?.totalDuration ? Number(videoFrame.totalDuration * 30) : 150}
           compositionWidth={screenSize.width}
           compositionHeight={screenSize.height}
           fps={30}
