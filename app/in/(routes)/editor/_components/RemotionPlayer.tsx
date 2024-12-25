@@ -1,7 +1,7 @@
 "use client";
-import { Player } from "@remotion/player";
+import { Player, PlayerRef } from "@remotion/player";
 import RemotionComposition from "./RemotionComposition";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   Select,
   SelectContent,
@@ -44,15 +44,36 @@ function RemotePlayer() {
   const [aspectRatio, setAspectRatio] = useState<AspectRatioType>("16:9");
   const [screenSize, setScreenSize] = useState<ScreenSize>(scaleToFit(aspectRatios["16:9"]));
   const { videoFrame } = useFramesList();
+  const playerRef = useRef<PlayerRef>(null);
 
   useEffect(() => {
     setScreenSize(scaleToFit(aspectRatios[aspectRatio]));
   }, [aspectRatio]);
 
+  const seekToFrame = useCallback(() => {
+    if (!videoFrame?.frameList || !playerRef.current || typeof videoFrame.selectedFrameIndex !== 'number') {
+      return;
+    }
+
+    const frameStart = videoFrame.frameList.reduce((total, frame, index) => {
+      if (index < videoFrame.selectedFrameIndex) {
+        return total + frame.duration * 30;
+      }
+      return total;
+    }, 0);
+    
+    playerRef.current.seekTo(frameStart);
+  }, [videoFrame?.frameList, videoFrame?.selectedFrameIndex]);
+
+  useEffect(() => {
+    seekToFrame();
+  }, [seekToFrame]);
+
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="w-full max-w-3xl">
         <Player
+          ref={playerRef}
           component={RemotionComposition}
           durationInFrames={videoFrame?.totalDuration ? Number(videoFrame.totalDuration * 30) : 150}
           compositionWidth={screenSize.width}

@@ -11,6 +11,7 @@ export interface Frame {
 export interface VideoFrameState {
   frameList: Frame[];
   totalDuration: number;
+  selectedFrameIndex: number;
 }
 
 interface FramesListContextType {

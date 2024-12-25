@@ -1,7 +1,7 @@
 "use client";
 import { PlusCircle, Trash2 } from "lucide-react";
 import Image from "next/image";
-import React, { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Frame, useFramesList } from "@/app/_context/FramesListContext";
 
@@ -14,8 +14,8 @@ const defaultFrame: Frame = {
 };
 
 function FrameList() {
-  const [frameList, setFrameList] = React.useState<Frame[]>([defaultFrame]);
-  const [selectedFrame, setSelectedFrame] = React.useState<number>(0);
+  const [frameList, setFrameList] = useState<Frame[]>([defaultFrame]);
+  const [selectedFrame, setSelectedFrame] = useState<number>(0);
   const { setVideoFrame } = useFramesList();
 
   const addNewFrame = () => {
@@ -34,11 +34,12 @@ function FrameList() {
     const totalDuration = frameList.reduce((total, frame) => total + frame.duration, 0);
     setVideoFrame({
       frameList,
-      totalDuration
+      totalDuration,
+      selectedFrameIndex: selectedFrame
     });
-  }, [frameList, setVideoFrame]);
+  }, [frameList, setVideoFrame, selectedFrame]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     updateVideoFrame();
   }, [updateVideoFrame]);
 
