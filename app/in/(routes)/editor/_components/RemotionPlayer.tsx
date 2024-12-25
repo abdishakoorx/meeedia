@@ -70,7 +70,7 @@ function RemotePlayer() {
   }, [seekToFrame]);
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 mb-8">
       <div className="w-full max-w-3xl">
         <Player
           ref={playerRef}
@@ -80,7 +80,10 @@ function RemotePlayer() {
           compositionHeight={screenSize.height}
           fps={30}
           controls
-          className="w-full aspect-auto"
+          style={{
+            borderRadius: 16,
+            width: '100%'
+          }}
           inputProps={{
             framelist: videoFrame?.frameList ?? []
           }}
