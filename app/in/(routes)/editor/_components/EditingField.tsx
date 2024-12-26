@@ -19,7 +19,7 @@ function EditingField() {
     ];
     const transitions = ["None", "Fade", "Dissolve", "Wipe", "Slide", "Zoom"];
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 overflow-y-auto max-h-96 md:max-h-full">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 overflow-y-auto max-h-96 md:max-h-full scrollbar-hide">
             <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
               Editing Tools
             </h2>
