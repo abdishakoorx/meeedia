@@ -5,14 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  Settings,
-  BarChart2,
   SidebarClose,
   SidebarOpen,
   LoaderPinwheel,
   Coins,
   X,
-  MonitorCog,
+  Camera,
+  Sparkles,
+  Grid3x3,
 } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { UserDetails } from "@/app/_context/UserDetails";
@@ -44,8 +44,8 @@ const Sidebar: React.FC = () => {
     };
 
     checkMobileScreen();
-    window.addEventListener('resize', checkMobileScreen);
-    return () => window.removeEventListener('resize', checkMobileScreen);
+    window.addEventListener("resize", checkMobileScreen);
+    return () => window.removeEventListener("resize", checkMobileScreen);
   }, []);
 
   const sidebarItems: SidebarItem[] = [
@@ -55,26 +55,26 @@ const Sidebar: React.FC = () => {
       href: "/in",
     },
     {
-      icon: <MonitorCog className="w-5 h-5" />,
-      label: "Editor",
+      icon: <Camera className="w-5 h-5" />,
+      label: "Scratch Editor",
       href: "/in/editor",
     },
     {
-      icon: <BarChart2 className="w-5 h-5" />,
-      label: "Analytics",
-      href: "/in/analytics",
+      icon: <Sparkles className="w-5 h-5" />,
+      label: "AI Editor",
+      href: "/in/ai",
     },
     {
-      icon: <Settings className="w-5 h-5" />,
-      label: "Settings",
-      href: "/in/settings",
+      icon: <Grid3x3 className="w-5 h-5" />,
+      label: "Templates",
+      href: "/in/templates",
     },
   ];
 
   const isActiveLink = (href: string): boolean => {
-    if (href === '/in') {
+    if (href === "/in") {
       // For dashboard, check if we're at root /in or /in/
-      return pathname === '/in' || pathname === '/in/';
+      return pathname === "/in" || pathname === "/in/";
     }
     // For other routes, check if the pathname starts with the href
     return pathname.startsWith(href);
@@ -82,62 +82,23 @@ const Sidebar: React.FC = () => {
 
   const getSidebarClasses = () => {
     if (isMobile) {
-      return `
-        fixed 
-        top-0 
-        left-0 
-        h-full 
-        w-64 
-        bg-gray-200 
-        dark:bg-gray-800 
-        border-r 
-        border-gray-200 
-        shadow-lg 
-        z-50 
-        transition-transform 
-        duration-300 
-        ease-in-out
-        flex
-        flex-col
-        ${isCollapsed ? '-translate-x-full' : 'translate-x-0'}
+      return `fixed top-0 left-0 h-full w-64 bg-gray-200 dark:bg-gray-800 border-r border-gray-200 shadow-lg z-50 transition-transform duration-300 ease-in-out flex flex-col 
+      ${isCollapsed ? "-translate-x-full" : "translate-x-0"}
       `;
     }
-    
-    return `
-      fixed 
-      left-0 
-      top-0 
-      h-full 
-      ${isCollapsed ? "w-20" : "w-64"} 
-      bg-gray-200 
-      dark:bg-gray-800 
-      border-r 
-      border-gray-200 
-      shadow-sm 
-      transition-all 
-      duration-300 
-      ease-in-out 
-      z-40 
-      flex 
-      flex-col 
-      overflow-hidden
+
+    return `fixed left-0 top-0 h-full bg-gray-200 dark:bg-gray-800 border-r border-gray-200 shadow-sm transition-all duration-300 ease-in-out z-40 flex flex-col overflow-hidden
+     ${isCollapsed ? "w-20" : "w-64"}
     `;
   };
 
   const MobileOverlay = () => {
     if (!isMobile || isCollapsed) return null;
-    
+
     return (
-      <div 
+      <div
         onClick={toggleSidebar}
-        className="
-          fixed 
-          inset-0 
-          bg-black/50 
-          z-40 
-          backdrop-blur-sm
-          lg:hidden
-        "
+        className="fixed inset-0 bg-black/50 z-40 backdrop-blur-smlg:hidden"
       />
     );
   };
@@ -146,19 +107,20 @@ const Sidebar: React.FC = () => {
     <>
       <MobileOverlay />
 
-      <div 
+      <div
         className={getSidebarClasses()}
-        style={{ 
-          ...(isMobile && isCollapsed && { 
-            transform: 'translateX(-100%)',
-            width: '0',
-            overflow: 'hidden'
-          }) 
+        style={{
+          ...(isMobile &&
+            isCollapsed && {
+              transform: "translateX(-100%)",
+              width: "0",
+              overflow: "hidden",
+            }),
         }}
       >
         <div className="flex-1 flex flex-col">
           {isMobile && !isCollapsed && (
-            <button 
+            <button
               onClick={toggleSidebar}
               className="
                 absolute 
@@ -176,17 +138,7 @@ const Sidebar: React.FC = () => {
           {!isMobile && (
             <div
               onClick={toggleSidebar}
-              className="
-                absolute 
-                top-6 
-                right-4 
-                transition 
-                rounded-full 
-                z-5 
-                p-2 
-                dark:text-accent 
-                text-accent-dark
-              "
+              className="absolute top-6 right-4 transition rounded-full z-5 p-2 dark:text-accent text-accent-dark"
             >
               {isCollapsed ? (
                 <SidebarOpen className="w-6 h-6" />
@@ -197,7 +149,7 @@ const Sidebar: React.FC = () => {
           )}
 
           <div className="h-16 mt-4 px-4">
-            {(!isMobile && isCollapsed) ? <></> : <Logo />}
+            {!isMobile && isCollapsed ? <></> : <Logo />}
           </div>
 
           <nav className="flex-1 pt-6">
@@ -212,11 +164,7 @@ const Sidebar: React.FC = () => {
                       ? "bg-secondary dark:bg-secondary-dark text-black text-lg"
                       : "text-gray-600 dark:text-gray-200 hover:bg-gray-100 dark:hover:text-gray-800"
                   }
-                  ${
-                    !isMobile && isCollapsed
-                      ? "justify-center"
-                      : ""
-                  }`}
+                  ${!isMobile && isCollapsed ? "justify-center" : ""}`}
               >
                 <span className="mr-4">{item.icon}</span>
                 <span
@@ -240,7 +188,7 @@ const Sidebar: React.FC = () => {
         <div className="mt-auto">
           <div className="p-4 border-t border-gray-300 dark:border-gray-700">
             <div className="flex items-center justify-between mb-2">
-              {(!isMobile && isCollapsed) ? (
+              {!isMobile && isCollapsed ? (
                 <Coins className="h-6 w-6 text-yellow-500" />
               ) : (
                 <div className="flex items-center space-x-2">
@@ -259,7 +207,7 @@ const Sidebar: React.FC = () => {
                 {(userDetails?.credits ?? 0) * 10}% Tokens Used
               </span>
             </Progress>
-            {(!isMobile && isCollapsed) ? null : (
+            {!isMobile && isCollapsed ? null : (
               <>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                   {10 - (userDetails?.credits ?? 0)} tokens used.
@@ -283,14 +231,9 @@ const Sidebar: React.FC = () => {
                   <UserButton />
 
                   <div
-                    className={`
-                      flex-1 
-                      ml-4 
-                      transition-all 
-                      duration-300 
-                      overflow-hidden 
+                    className={`flex-1 ml-4 transition-all duration-300 overflow-hidden 
                       ${
-                        (!isMobile && isCollapsed)
+                        !isMobile && isCollapsed
                           ? "opacity-0 w-0 max-w-0"
                           : "opacity-100 w-auto max-w-full"
                       }
