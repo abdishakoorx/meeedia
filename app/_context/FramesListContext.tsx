@@ -6,6 +6,12 @@ export interface Frame {
   textColor: string;
   fontSize: string;
   duration: number;
+  backgroundColor: string;
+  pattern?: string;
+  fontFamily: string;
+  isBold?: boolean;
+  isItalic?: boolean;
+  isUnderline?: boolean;
 }
 
 export interface VideoFrameState {
