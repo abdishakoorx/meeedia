@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import Header from "../../_components/HeaderNameProvider";
 import FrameList from "./_components/FrameList";
 import RemotePlayer from "./_components/RemotionPlayer";
-import EditingField from "./_components/EditingField";
 import { useCallback, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { v4 as uuidv4 } from 'uuid';
@@ -95,13 +94,10 @@ export default function ScratchEditor() {
             </Button>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 h-auto md:h-[calc(100vh-12rem)]">
+        <div className="grid grid-cols-1 md:grid-cols-9 gap-4 md:gap-6 h-auto md:h-[calc(100vh-12rem)]">
           <FrameList />
           <div className="md:col-span-7 space-y-4">
             <RemotePlayer />
-          </div>
-          <div className="md:col-span-3">
-            <EditingField />
           </div>
         </div>
       </div>
