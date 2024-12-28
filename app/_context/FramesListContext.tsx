@@ -12,6 +12,7 @@ export interface Frame {
   isBold?: boolean;
   isItalic?: boolean;
   isUnderline?: boolean;
+  textCasing?: string;
 }
 
 export interface VideoFrameState {

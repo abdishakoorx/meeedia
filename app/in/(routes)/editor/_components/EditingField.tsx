@@ -24,7 +24,13 @@ const patterns = [
   { name: "Zigzag", value: "zigzag" },
   { name: "Stripes", value: "stripes" },
   { name: "Checkerboard", value: "checkerboard" },
-  { name: "Honeycomb", value: "honeycomb" },
+];
+
+const textCasingOptions = [
+  { name: "Default", value: "default" },
+  { name: "Uppercase", value: "uppercase" },
+  { name: "Lowercase", value: "lowercase" },
+  { name: "Capitalize", value: "capitalize" },
 ];
 
 export default function EditingField() {
@@ -40,6 +46,7 @@ export default function EditingField() {
     isBold: false,
     isItalic: false,
     isUnderline: false,
+    textCasing: "default",
   });
 
   useEffect(() => {
@@ -62,6 +69,7 @@ export default function EditingField() {
         isBold: currentFrame.isBold || false,
         isItalic: currentFrame.isItalic || false,
         isUnderline: currentFrame.isUnderline || false,
+        textCasing: currentFrame.textCasing || "default",
       });
     }
   }, [videoFrame?.selectedFrameIndex, videoFrame?.frameList]);
@@ -122,7 +130,7 @@ export default function EditingField() {
         <div className="flex space-x-2 mt-2">
           <Button
             variant={editValues.isBold ? "default" : "outline"}
-            size="sm"            
+            size="sm"
             className="text-black hover:text-black font-bold text-lg"
             onClick={() =>
               setEditValues((prev) => ({ ...prev, isBold: !prev.isBold }))
@@ -227,11 +235,32 @@ export default function EditingField() {
         </div>
 
         <div className="space-y-2">
+          <Label htmlFor="textCasing">Text Casing</Label>
+          <Select
+            value={editValues.textCasing}
+            onValueChange={(value) =>
+              setEditValues((prev) => ({ ...prev, textCasing: value }))
+            }
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select text casing" />
+            </SelectTrigger>
+            <SelectContent>
+              {textCasingOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
           <Label htmlFor="fontSize">Font Size: {editValues.fontSize}px</Label>
           <Slider
             id="fontSize"
             min={12}
-            max={72}
+            max={144}
             step={1}
             value={[parseInt(editValues.fontSize)]}
             onValueChange={(value) =>

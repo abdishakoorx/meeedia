@@ -13,17 +13,14 @@ const patterns = {
   waves:
     "repeating-radial-gradient(circle at 0 0, transparent 0, rgba(0, 0, 0, 0.1) 2px, transparent 4px)",
   zigzag:
-    "linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%) 0 15px, linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%) 0 15px, linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.1) 75%), linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.1) 75%)",
+    "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0px, transparent 10px, transparent 20px), repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 0px, transparent 10px, transparent 20px)",
   stripes:
     "repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 10px, transparent 10px, transparent 20px)",
   checkerboard:
-    "linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%) 0 0, linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%) 0 0, linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.1) 75%) 0 0, linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.1) 75%) 0 0",
-  honeycomb: `radial-gradient(circle farthest-side at 0% 50%, rgba(0, 0, 0, 0.1) 23.5%, rgba(240, 166, 17, 0) 0)21px 30px,
-    radial-gradient(circle farthest-side at 0% 50%, rgba(0, 0, 0, 0.1) 24%, rgba(240, 166, 17, 0) 0)19px 30px,
-    linear-gradient(rgba(0, 0, 0, 0.1) 14%, rgba(240, 166, 17, 0) 0, rgba(240, 166, 17, 0) 85%, rgba(0, 0, 0, 0.1) 0)0 0,
-    linear-gradient(150deg, rgba(0, 0, 0, 0.1) 24%, rgba(240, 166, 17, 0) 0)19px 30px,
-    linear-gradient(30deg, rgba(0, 0, 0, 0.1) 24%, rgba(240, 166, 17, 0) 0)19px 30px`,
+    "repeating-conic-gradient(rgba(0, 0, 0, 0.1) 0% 25%, transparent 0% 50%)",
 };
+
+type TextTransform = "none" | "capitalize" | "uppercase" | "lowercase";
 
 interface RemotionCompositionProps {
   framelist: Frame[];
@@ -58,8 +55,17 @@ const RemotionComposition: React.FC<RemotionCompositionProps> = ({
                   backgroundImage: frame.pattern
                     ? patterns[frame.pattern as keyof typeof patterns]
                     : "none",
-                  backgroundSize:
-                    frame.pattern === "honeycomb" ? "40px 50px" : "20px 20px",
+                  backgroundSize: (() => {
+                    switch (frame.pattern) {
+                      case "checkerboard":
+                        return "25px 25px";
+                      case "zigzag":
+                        return "40px 40px";
+                      default:
+                        return "20px 20px";
+                    }
+                  })(),
+                  backgroundRepeat: "repeat",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -74,6 +80,7 @@ const RemotionComposition: React.FC<RemotionCompositionProps> = ({
                     fontWeight: frame.isBold ? "bold" : "normal",
                     fontStyle: frame.isItalic ? "italic" : "normal",
                     textDecoration: frame.isUnderline ? "underline" : "none",
+                    textTransform: frame.textCasing === "none" ? "none" : (frame.textCasing as TextTransform),
                   }}
                 >
                   {frame.text}
