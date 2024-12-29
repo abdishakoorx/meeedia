@@ -81,7 +81,7 @@ const RemotionComposition: React.FC<RemotionCompositionProps> = ({
                       color: frame.textColor,
                       fontSize: `${frame.fontSize}px`,
                       fontFamily: getFontFamily(frame.fontFamily),
-                      textAlign: "center",
+                      textAlign: frame.textAlign || "center", 
                       fontWeight: frame.isBold ? "bold" : "normal",
                       fontStyle: frame.isItalic ? "italic" : "normal",
                       textDecoration: frame.isUnderline ? "underline" : "none",
@@ -89,6 +89,7 @@ const RemotionComposition: React.FC<RemotionCompositionProps> = ({
                         frame.textCasing === "none"
                           ? "none"
                           : (frame.textCasing as TextTransform),
+                      width: "100%",
                     }}
                   >
                     {frame.text}

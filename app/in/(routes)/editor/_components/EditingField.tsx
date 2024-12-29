@@ -40,9 +40,25 @@ const textCasingOptions = [
   { name: "Capitalize", value: "capitalize" },
 ];
 
+
 export default function EditingField() {
   const { videoFrame, setVideoFrame } = useFramesList();
-  const [editValues, setEditValues] = useState({
+  const [editValues, setEditValues] = useState<{
+    text: string;
+    textColor: string;
+    fontSize: string;
+    duration: number;
+    backgroundColor: string;
+    pattern: string;
+    fontFamily: string;
+    isBold: boolean;
+    isItalic: boolean;
+    isUnderline: boolean;
+    textCasing: string;
+    animation: string;
+    animationDelay: number;
+    textAlign: "left" | "center" | "right";
+  }>({
     text: "",
     textColor: "#000000",
     fontSize: "20",
@@ -56,6 +72,7 @@ export default function EditingField() {
     textCasing: "default",
     animation: "none",
     animationDelay: 0,
+    textAlign: "center"
   });
 
   useEffect(() => {
@@ -81,6 +98,7 @@ export default function EditingField() {
         textCasing: currentFrame.textCasing || "default",
         animation: currentFrame.animation || "none",
         animationDelay: currentFrame.animationDelay || 0,
+        textAlign: currentFrame.textAlign || "center",
       });
     }
   }, [videoFrame?.selectedFrameIndex, videoFrame?.frameList]);
@@ -143,6 +161,51 @@ export default function EditingField() {
                   }
                   placeholder="Enter text"
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="textAlign">Text Alignment</Label>
+                <div className="flex gap-2">
+                  <Button
+                    variant={
+                      editValues.textAlign === "left" ? "default" : "outline"
+                    }
+                    size="sm"
+                    className="text-black hover:text-black text-base flex-1"
+                    onClick={() =>
+                      setEditValues((prev) => ({ ...prev, textAlign: "left" }))
+                    }
+                  >
+                    Left
+                  </Button>
+                  <Button
+                    variant={
+                      editValues.textAlign === "center" ? "default" : "outline"
+                    }
+                    size="sm"
+                    className="text-black hover:text-black text-base flex-1"
+                    onClick={() =>
+                      setEditValues((prev) => ({
+                        ...prev,
+                        textAlign: "center",
+                      }))
+                    }
+                  >
+                    Center
+                  </Button>
+                  <Button
+                    variant={
+                      editValues.textAlign === "right" ? "default" : "outline"
+                    }
+                    size="sm"
+                    className="text-black hover:text-black text-base flex-1"
+                    onClick={() =>
+                      setEditValues((prev) => ({ ...prev, textAlign: "right" }))
+                    }
+                  >
+                    Right
+                  </Button>
+                </div>
               </div>
 
               <div className="flex space-x-2">

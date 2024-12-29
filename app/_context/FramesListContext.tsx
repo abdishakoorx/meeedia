@@ -15,6 +15,7 @@ export interface Frame {
   textCasing?: string;
   animation?: string;
   animationDelay?: number;
+  textAlign?: "left" | "center" | "right";
 }
 
 export interface VideoFrameState {
