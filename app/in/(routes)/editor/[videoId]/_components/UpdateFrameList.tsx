@@ -11,6 +11,8 @@ const defaultFrame: Frame = {
   textColor: "blue",
   fontSize: "20",
   duration: 3,
+  backgroundColor: "white",
+  fontFamily: "Arial",
 };
 
 function UpdateFrameList() {
@@ -104,7 +106,7 @@ function UpdateFrameList() {
                   {frame.text}
                 </p>
               </div>
-              <div className="absolute right-16 text-sm text-gray-500">
+              <div className="absolute right-14 text-sm text-gray-500">
                 {frame.duration}s
               </div>
               <motion.button
