@@ -1,6 +1,7 @@
 import { AbsoluteFill, Sequence } from "remotion";
 import { Frame } from "@/app/_context/FramesListContext";
 import { fontOptions } from "./Fonts";
+import { AnimationWrapper } from "./Animations";
 
 const patterns = {
   none: "none",
@@ -71,20 +72,28 @@ const RemotionComposition: React.FC<RemotionCompositionProps> = ({
                   justifyContent: "center",
                 }}
               >
-                <div
-                  style={{
-                    color: frame.textColor,
-                    fontSize: `${frame.fontSize}px`,
-                    fontFamily: getFontFamily(frame.fontFamily),
-                    textAlign: "center",
-                    fontWeight: frame.isBold ? "bold" : "normal",
-                    fontStyle: frame.isItalic ? "italic" : "normal",
-                    textDecoration: frame.isUnderline ? "underline" : "none",
-                    textTransform: frame.textCasing === "none" ? "none" : (frame.textCasing as TextTransform),
-                  }}
+                <AnimationWrapper
+                  animationType={frame.animation || "none"}
+                  delay={frame.animationDelay || 0}
                 >
-                  {frame.text}
-                </div>
+                  <div
+                    style={{
+                      color: frame.textColor,
+                      fontSize: `${frame.fontSize}px`,
+                      fontFamily: getFontFamily(frame.fontFamily),
+                      textAlign: "center",
+                      fontWeight: frame.isBold ? "bold" : "normal",
+                      fontStyle: frame.isItalic ? "italic" : "normal",
+                      textDecoration: frame.isUnderline ? "underline" : "none",
+                      textTransform:
+                        frame.textCasing === "none"
+                          ? "none"
+                          : (frame.textCasing as TextTransform),
+                    }}
+                  >
+                    {frame.text}
+                  </div>
+                </AnimationWrapper>
               </div>
             </Sequence>
           );

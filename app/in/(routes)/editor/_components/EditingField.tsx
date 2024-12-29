@@ -6,6 +6,12 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -13,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { fontOptions } from "./Fonts";
+import { ANIMATION_OPTIONS } from "./Animations";
 
 const patterns = [
   { name: "None", value: "none" },
@@ -47,6 +54,8 @@ export default function EditingField() {
     isItalic: false,
     isUnderline: false,
     textCasing: "default",
+    animation: "none",
+    animationDelay: 0,
   });
 
   useEffect(() => {
@@ -70,6 +79,8 @@ export default function EditingField() {
         isItalic: currentFrame.isItalic || false,
         isUnderline: currentFrame.isUnderline || false,
         textCasing: currentFrame.textCasing || "default",
+        animation: currentFrame.animation || "none",
+        animationDelay: currentFrame.animationDelay || 0,
       });
     }
   }, [videoFrame?.selectedFrameIndex, videoFrame?.frameList]);
@@ -112,188 +123,293 @@ export default function EditingField() {
 
   return (
     <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 space-y-6">
-      <h3 className="text-lg font-semibold mb-4">Edit Frame</h3>
+      <h3 className="text-xl font-semibold mb-4">Edit Frame</h3>
 
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="text">Text</Label>
-          <Input
-            id="text"
-            value={editValues.text}
-            onChange={(e) =>
-              setEditValues((prev) => ({ ...prev, text: e.target.value }))
-            }
-            placeholder="Enter text"
-          />
-        </div>
+      <Accordion type="single" collapsible className="w-full space-y-4">
+        {/* Text Content Section */}
+        <AccordionItem value="text-content">
+          <AccordionTrigger className="text-base font-semibold">
+            Text Content
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="text">Text</Label>
+                <Input
+                  id="text"
+                  value={editValues.text}
+                  onChange={(e) =>
+                    setEditValues((prev) => ({ ...prev, text: e.target.value }))
+                  }
+                  placeholder="Enter text"
+                />
+              </div>
 
-        <div className="flex space-x-2 mt-2">
-          <Button
-            variant={editValues.isBold ? "default" : "outline"}
-            size="sm"
-            className="text-black hover:text-black font-bold text-lg"
-            onClick={() =>
-              setEditValues((prev) => ({ ...prev, isBold: !prev.isBold }))
-            }
-          >
-            <span className="font-bold">B</span>
-          </Button>
-          <Button
-            variant={editValues.isItalic ? "default" : "outline"}
-            size="sm"
-            className="text-black hover:text-black font-bold text-lg"
-            onClick={() =>
-              setEditValues((prev) => ({ ...prev, isItalic: !prev.isItalic }))
-            }
-          >
-            <span className="italic">I</span>
-          </Button>
-          <Button
-            variant={editValues.isUnderline ? "default" : "outline"}
-            size="sm"
-            className="text-black hover:text-black font-bold text-lg"
-            onClick={() =>
-              setEditValues((prev) => ({
-                ...prev,
-                isUnderline: !prev.isUnderline,
-              }))
-            }
-          >
-            <span className="underline">U</span>
-          </Button>
-        </div>
+              <div className="flex space-x-2">
+                <Button
+                  variant={editValues.isBold ? "default" : "outline"}
+                  size="sm"
+                  className="text-black hover:text-black font-bold text-lg"
+                  onClick={() =>
+                    setEditValues((prev) => ({ ...prev, isBold: !prev.isBold }))
+                  }
+                >
+                  <span className="font-bold">B</span>
+                </Button>
+                <Button
+                  variant={editValues.isItalic ? "default" : "outline"}
+                  size="sm"
+                  className="text-black hover:text-black font-bold text-lg"
+                  onClick={() =>
+                    setEditValues((prev) => ({
+                      ...prev,
+                      isItalic: !prev.isItalic,
+                    }))
+                  }
+                >
+                  <span className="italic">I</span>
+                </Button>
+                <Button
+                  variant={editValues.isUnderline ? "default" : "outline"}
+                  size="sm"
+                  className="text-black hover:text-black font-bold text-lg"
+                  onClick={() =>
+                    setEditValues((prev) => ({
+                      ...prev,
+                      isUnderline: !prev.isUnderline,
+                    }))
+                  }
+                >
+                  <span className="underline">U</span>
+                </Button>
+              </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="fontFamily">Font Style</Label>
-          <Select
-            value={editValues.fontFamily}
-            onValueChange={(value) =>
-              setEditValues((prev) => ({ ...prev, fontFamily: value }))
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select font" />
-            </SelectTrigger>
-            <SelectContent>
-              {fontOptions.map((font) => (
-                <SelectItem key={font.name} value={font.name}>
-                  <span className={font.font.className}>{font.name}</span>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+              <div className="space-y-2">
+                <Label htmlFor="textCasing">Text Casing</Label>
+                <Select
+                  value={editValues.textCasing}
+                  onValueChange={(value) =>
+                    setEditValues((prev) => ({ ...prev, textCasing: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select text casing" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {textCasingOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        <div className="space-y-2">
-          <Label htmlFor="textColor">Text Color</Label>
-          <Input
-            id="textColor"
-            type="color"
-            value={editValues.textColor}
-            onChange={(e) =>
-              setEditValues((prev) => ({ ...prev, textColor: e.target.value }))
-            }
-            className="h-10"
-          />
-        </div>
+        {/* Typography Section */}
+        <AccordionItem value="typography">
+          <AccordionTrigger className="text-base font-semibold">
+            Typography
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="fontFamily">Font Style</Label>
+                <Select
+                  value={editValues.fontFamily}
+                  onValueChange={(value) =>
+                    setEditValues((prev) => ({ ...prev, fontFamily: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select font" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {fontOptions.map((font) => (
+                      <SelectItem key={font.name} value={font.name}>
+                        <span className={font.font.className}>{font.name}</span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="backgroundColor">Background Color</Label>
-          <Input
-            id="backgroundColor"
-            type="color"
-            value={editValues.backgroundColor}
-            onChange={(e) =>
-              setEditValues((prev) => ({
-                ...prev,
-                backgroundColor: e.target.value,
-              }))
-            }
-            className="h-10"
-          />
-        </div>
+              <div className="space-y-2">
+                <Label htmlFor="fontSize">
+                  Font Size: {editValues.fontSize}px
+                </Label>
+                <Slider
+                  id="fontSize"
+                  min={12}
+                  max={144}
+                  step={1}
+                  value={[parseInt(editValues.fontSize)]}
+                  onValueChange={(value) =>
+                    setEditValues((prev) => ({
+                      ...prev,
+                      fontSize: value[0].toString(),
+                    }))
+                  }
+                />
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        <div className="space-y-2">
-          <Label htmlFor="pattern">Background Pattern</Label>
-          <Select
-            value={editValues.pattern}
-            onValueChange={(value) =>
-              setEditValues((prev) => ({ ...prev, pattern: value }))
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select pattern" />
-            </SelectTrigger>
-            <SelectContent>
-              {patterns.map((pattern) => (
-                <SelectItem key={pattern.value} value={pattern.value}>
-                  {pattern.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Colors Section */}
+        <AccordionItem value="colors">
+          <AccordionTrigger className="text-base font-semibold">
+            Colors
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="textColor">Text Color</Label>
+                <Input
+                  id="textColor"
+                  type="color"
+                  value={editValues.textColor}
+                  onChange={(e) =>
+                    setEditValues((prev) => ({
+                      ...prev,
+                      textColor: e.target.value,
+                    }))
+                  }
+                  className="h-10"
+                />
+              </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="textCasing">Text Casing</Label>
-          <Select
-            value={editValues.textCasing}
-            onValueChange={(value) =>
-              setEditValues((prev) => ({ ...prev, textCasing: value }))
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select text casing" />
-            </SelectTrigger>
-            <SelectContent>
-              {textCasingOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+              <div className="space-y-2">
+                <Label htmlFor="backgroundColor">Background Color</Label>
+                <Input
+                  id="backgroundColor"
+                  type="color"
+                  value={editValues.backgroundColor}
+                  onChange={(e) =>
+                    setEditValues((prev) => ({
+                      ...prev,
+                      backgroundColor: e.target.value,
+                    }))
+                  }
+                  className="h-10"
+                />
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        <div className="space-y-2">
-          <Label htmlFor="fontSize">Font Size: {editValues.fontSize}px</Label>
-          <Slider
-            id="fontSize"
-            min={12}
-            max={144}
-            step={1}
-            value={[parseInt(editValues.fontSize)]}
-            onValueChange={(value) =>
-              setEditValues((prev) => ({
-                ...prev,
-                fontSize: value[0].toString(),
-              }))
-            }
-          />
-        </div>
+        {/* Background Section */}
+        <AccordionItem value="background">
+          <AccordionTrigger className="text-base font-semibold">
+            Background Pattern
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-2">
+              <Select
+                value={editValues.pattern}
+                onValueChange={(value) =>
+                  setEditValues((prev) => ({ ...prev, pattern: value }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select pattern" />
+                </SelectTrigger>
+                <SelectContent>
+                  {patterns.map((pattern) => (
+                    <SelectItem key={pattern.value} value={pattern.value}>
+                      {pattern.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        <div className="space-y-2">
-          <Label htmlFor="duration">Duration: {editValues.duration}s</Label>
-          <Slider
-            id="duration"
-            min={1}
-            max={10}
-            step={0.5}
-            value={[editValues.duration]}
-            onValueChange={(value) =>
-              setEditValues((prev) => ({ ...prev, duration: value[0] }))
-            }
-          />
-        </div>
+        {/* Timing Section */}
+        <AccordionItem value="timing">
+          <AccordionTrigger className="text-base font-semibold">
+            Duration
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-2">
+              <Label htmlFor="duration">Duration: {editValues.duration}s</Label>
+              <Slider
+                id="duration"
+                min={1}
+                max={10}
+                step={0.5}
+                value={[editValues.duration]}
+                onValueChange={(value) =>
+                  setEditValues((prev) => ({ ...prev, duration: value[0] }))
+                }
+              />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        <Button
-          className="w-full bg-blue-500 hover:bg-blue-600 mt-4"
-          onClick={handleUpdate}
-        >
-          <Check className="w-4 h-4 mr-2" />
-          Apply Changes
-        </Button>
-      </div>
+        {/* Animations */}
+        <AccordionItem value="animation">
+          <AccordionTrigger className="text-base font-semibold">
+            Animation
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="animation">Animation Type</Label>
+                <Select
+                  value={editValues.animation || "none"}
+                  onValueChange={(value) =>
+                    setEditValues((prev) => ({ ...prev, animation: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select animation" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ANIMATION_OPTIONS.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {editValues.animation && editValues.animation !== "none" && (
+                <div className="space-y-2">
+                  <Label htmlFor="animationDelay">
+                    Animation Delay: {editValues.animationDelay || 0}s
+                  </Label>
+                  <Slider
+                    id="animationDelay"
+                    min={0}
+                    max={5}
+                    step={0.1}
+                    value={[editValues.animationDelay || 0]}
+                    onValueChange={(value) =>
+                      setEditValues((prev) => ({
+                        ...prev,
+                        animationDelay: value[0],
+                      }))
+                    }
+                  />
+                </div>
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      <Button
+        className="w-full bg-blue-500 hover:bg-blue-600 mt-4"
+        onClick={handleUpdate}
+      >
+        <Check className="w-4 h-4 mr-2" />
+        Apply Changes
+      </Button>
     </div>
   );
 }

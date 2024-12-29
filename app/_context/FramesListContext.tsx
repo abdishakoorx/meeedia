@@ -13,6 +13,8 @@ export interface Frame {
   isItalic?: boolean;
   isUnderline?: boolean;
   textCasing?: string;
+  animation?: string;
+  animationDelay?: number;
 }
 
 export interface VideoFrameState {
