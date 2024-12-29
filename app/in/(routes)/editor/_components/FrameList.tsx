@@ -11,6 +11,8 @@ const defaultFrame: Frame = {
   textColor: "blue",
   fontSize: "20",
   duration: 3,
+  backgroundColor: "gray",
+  fontFamily: "Inter",
 };
 
 function FrameList() {
