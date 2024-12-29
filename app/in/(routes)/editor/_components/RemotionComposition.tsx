@@ -1,4 +1,4 @@
-import { AbsoluteFill, Sequence } from "remotion";
+import { AbsoluteFill, Sequence, Audio } from "remotion";
 import { Frame } from "@/app/_context/FramesListContext";
 import { fontOptions } from "./Fonts";
 import { AnimationWrapper } from "./Animations";
@@ -25,10 +25,12 @@ type TextTransform = "none" | "capitalize" | "uppercase" | "lowercase";
 
 interface RemotionCompositionProps {
   framelist: Frame[];
+  audioTrack: string;
 }
 
 const RemotionComposition: React.FC<RemotionCompositionProps> = ({
   framelist,
+  audioTrack,
 }) => {
   let trackFrame = 0;
   // const { width, height } = useVideoConfig();
@@ -40,6 +42,7 @@ const RemotionComposition: React.FC<RemotionCompositionProps> = ({
 
   return (
     <AbsoluteFill>
+      {audioTrack && <Audio src={audioTrack} />}
       <ul>
         {framelist.map((frame, index) => {
           const fromFrame = index === 0 ? 0 : trackFrame;
