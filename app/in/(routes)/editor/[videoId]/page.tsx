@@ -35,16 +35,17 @@ export default function VideoEditor() {
         const data = await response.json();
         if (data.result) {
           setVideoTitle(data.result.title || "Untitled");
-          if (data.result.description?.frames) {
+          if (data.result.description) {
             setVideoFrame({
-              frameList: data.result.description.frames,
-              totalDuration: data.result.description.totalDuration,
+              frameList: data.result.description.frames || [],
+              totalDuration: data.result.description.totalDuration || 0,
               selectedFrameIndex: 0,
+              aspectRatio: data.result.description.aspectRatio || "16:9",
+              audioTrack: data.result.description.audioTrack || "none",
             });
           }
         }
-      } catch (error) {
-        console.error("Error fetching video:", error);
+      } catch {
         toast.error("Failed to load video");
       } finally {
         setIsLoading(false);
@@ -92,7 +93,8 @@ export default function VideoEditor() {
           description: {
             frames: videoFrame.frameList,
             totalDuration: videoFrame.totalDuration,
-            aspectRatio: "16:9",
+            aspectRatio: videoFrame.aspectRatio,
+            audioTrack: videoFrame.audioTrack,
           },
         };
 
@@ -111,7 +113,6 @@ export default function VideoEditor() {
 
         toast.success("Video updated successfully");
       } catch (error) {
-        console.error("Error updating video:", error);
         toast.error(
           error instanceof Error ? error.message : "Failed to update video"
         );
@@ -123,7 +124,7 @@ export default function VideoEditor() {
   );
 
   if (isLoading) {
-    return <CustomLoader/>;
+    return <CustomLoader />;
   }
 
   return (

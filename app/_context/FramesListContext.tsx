@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
 export interface Frame {
   image: string;
@@ -18,28 +18,26 @@ export interface Frame {
   textAlign?: "left" | "center" | "right";
 }
 
-export interface VideoFrameState {
+export interface VideoState {
   frameList: Frame[];
   totalDuration: number;
   selectedFrameIndex: number;
+  aspectRatio: string;
+  audioTrack: string;
 }
 
-interface FramesListContextType {
-  videoFrame: VideoFrameState | null;
-  setVideoFrame: React.Dispatch<React.SetStateAction<VideoFrameState | null>>;
-}
-
-const defaultState: FramesListContextType = {
+export const FramesListContext = createContext<{
+  videoFrame: VideoState | null;
+  setVideoFrame: React.Dispatch<React.SetStateAction<VideoState | null>>;
+}>({
   videoFrame: null,
-  setVideoFrame: () => {}
-};
-
-export const FramesListContext = createContext<FramesListContextType>(defaultState);
+  setVideoFrame: () => {},
+});
 
 export const useFramesList = () => {
   const context = useContext(FramesListContext);
   if (!context) {
-    throw new Error('useFramesList must be used within a FramesListProvider');
+    throw new Error("useFramesList must be used within a FramesListProvider");
   }
   return context;
 };

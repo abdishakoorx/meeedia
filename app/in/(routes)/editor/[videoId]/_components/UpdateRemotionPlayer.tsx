@@ -19,7 +19,6 @@ interface ScreenSize {
 }
 
 type AspectRatioType = keyof typeof aspectRatios;
-
 type AudioType = keyof typeof audioFiles;
 
 const BASE_WIDTH = 1920;
@@ -62,17 +61,38 @@ const scaleToFit = (
 };
 
 function UpdatedRemotePlayer() {
-  const [aspectRatio, setAspectRatio] = useState<AspectRatioType>("16:9");
-  const [selectedAudio, setSelectedAudio] = useState<AudioType>("none");
+  const { videoFrame, setVideoFrame } = useFramesList();
   const [screenSize, setScreenSize] = useState<ScreenSize>(
-    scaleToFit(aspectRatios["16:9"])
+    scaleToFit(aspectRatios[videoFrame?.aspectRatio as AspectRatioType || "16:9"])
   );
-  const { videoFrame } = useFramesList();
   const playerRef = useRef<PlayerRef>(null);
 
+  // Update screen size when aspect ratio changes in context
   useEffect(() => {
-    setScreenSize(scaleToFit(aspectRatios[aspectRatio]));
-  }, [aspectRatio]);
+    if (videoFrame?.aspectRatio) {
+      setScreenSize(scaleToFit(aspectRatios[videoFrame.aspectRatio as AspectRatioType]));
+    }
+  }, [videoFrame?.aspectRatio]);
+
+  const handleAspectRatioChange = (value: AspectRatioType) => {
+    setVideoFrame(prev => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        aspectRatio: value
+      };
+    });
+  };
+
+  const handleAudioChange = (value: AudioType) => {
+    setVideoFrame(prev => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        audioTrack: value
+      };
+    });
+  };
 
   const seekToFrame = useCallback(() => {
     if (
@@ -118,7 +138,7 @@ function UpdatedRemotePlayer() {
           }}
           inputProps={{
             framelist: videoFrame?.frameList ?? [],
-            audioTrack: audioFiles[selectedAudio],
+            audioTrack: audioFiles[videoFrame?.audioTrack as AudioType || "none"],
           }}
         />
       </div>
@@ -127,8 +147,8 @@ function UpdatedRemotePlayer() {
         <div className="flex items-center gap-2">
           <Expand className="w-5 h-5" />
           <Select
-            value={aspectRatio}
-            onValueChange={(value) => setAspectRatio(value as AspectRatioType)}
+            value={videoFrame?.aspectRatio || "16:9"}
+            onValueChange={handleAspectRatioChange}
           >
             <SelectTrigger className="w-32">
               <SelectValue placeholder="Aspect Ratio" />
@@ -144,8 +164,8 @@ function UpdatedRemotePlayer() {
         </div>
 
         <AudioSelector
-          value={selectedAudio}
-          onValueChange={(value) => setSelectedAudio(value)}
+          value={videoFrame?.audioTrack as AudioType || "none"}
+          onValueChange={handleAudioChange}
         />
       </div>
     </div>
