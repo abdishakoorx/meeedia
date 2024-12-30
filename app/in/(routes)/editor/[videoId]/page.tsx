@@ -2,7 +2,6 @@
 import { Download, Save, Pencil, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "../../../_components/HeaderNameProvider";
-import RemotePlayer from "../_components/RemotionPlayer";
 import EditingField from "../_components/EditingField";
 import { useCallback, useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
@@ -11,6 +10,7 @@ import { useFramesList } from "@/app/_context/FramesListContext";
 import { useParams } from "next/navigation";
 import UpdateFrameList from "./_components/UpdateFrameList";
 import { CustomLoader } from "@/components/CustomLoader";
+import UpdatedRemotePlayer from "./_components/UpdateRemotionPlayer";
 
 export default function VideoEditor() {
   const [isSaving, setIsSaving] = useState(false);
@@ -189,7 +189,7 @@ export default function VideoEditor() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 h-auto md:h-[calc(100vh-12rem)]">
           <UpdateFrameList />
           <div className="md:col-span-7 space-y-4">
-            <RemotePlayer />
+            <UpdatedRemotePlayer />
           </div>
           <div className="md:col-span-3">
             <EditingField />

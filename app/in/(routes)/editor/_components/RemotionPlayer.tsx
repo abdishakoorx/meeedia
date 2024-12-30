@@ -1,78 +1,15 @@
 "use client";
 import { Player, PlayerRef } from "@remotion/player";
 import RemotionComposition from "./RemotionComposition";
-import { useState, useEffect, useRef, useCallback } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Expand } from "lucide-react";
+import { useRef, useCallback, useEffect } from "react";
 import { useFramesList } from "@/app/_context/FramesListContext";
-import AudioSelector from "./Audios";
-
-interface ScreenSize {
-  width: number;
-  height: number;
-}
-
-type AspectRatioType = keyof typeof aspectRatios;
-
-type AudioType = keyof typeof audioFiles;
 
 const BASE_WIDTH = 1920;
+const BASE_HEIGHT = 1080; // 16:9 aspect ratio fixed
 
-const aspectRatios = {
-  "16:9": { width: BASE_WIDTH, height: Math.round(BASE_WIDTH * (9 / 16)) },
-  "4:3": { width: BASE_WIDTH, height: Math.round(BASE_WIDTH * (3 / 4)) },
-  "1:1": { width: BASE_WIDTH, height: BASE_WIDTH },
-  "9:16": { width: Math.round(BASE_WIDTH * (9 / 16)), height: BASE_WIDTH },
-  "21:9": { width: BASE_WIDTH, height: Math.round(BASE_WIDTH * (9 / 21)) },
-  "2.39:1": { width: BASE_WIDTH, height: Math.round(BASE_WIDTH / 2.39) },
-  "5:4": { width: BASE_WIDTH, height: Math.round(BASE_WIDTH * (4 / 5)) },
-  "3:2": { width: BASE_WIDTH, height: Math.round(BASE_WIDTH * (2 / 3)) },
-} as const;
-
-const audioFiles = {
-  none: "",
-  siren: "/videos/siren.mp3",
-  choir: "/videos/choir.mp3",
-  swoosh: "/videos/swoosh.mp3",
-  impact: "/videos/impact.mp3",
-  laugh: "/videos/laugh.mp3",
-  horses: "/videos/horses.mp3",
-  pulse: "/videos/pulse.mp3",
-  wind: "/videos/wind.mp3",
-  applause: "/videos/applause.mp3",
-  stadium: "/videos/stadium.mp3",
-  guitar: "/videos/guitar.mp3",
-};
-
-const scaleToFit = (
-  dimensions: ScreenSize,
-  maxWidth: number = 624
-): ScreenSize => {
-  const scale = maxWidth / dimensions.width;
-  return {
-    width: Math.round(dimensions.width * scale),
-    height: Math.round(dimensions.height * scale),
-  };
-};
-
-function RemotePlayer() {
-  const [aspectRatio, setAspectRatio] = useState<AspectRatioType>("16:9");
-  const [selectedAudio, setSelectedAudio] = useState<AudioType>("none");
-  const [screenSize, setScreenSize] = useState<ScreenSize>(
-    scaleToFit(aspectRatios["16:9"])
-  );
+function RemotionPlayer() {
   const { videoFrame } = useFramesList();
   const playerRef = useRef<PlayerRef>(null);
-
-  useEffect(() => {
-    setScreenSize(scaleToFit(aspectRatios[aspectRatio]));
-  }, [aspectRatio]);
 
   const seekToFrame = useCallback(() => {
     if (
@@ -108,8 +45,8 @@ function RemotePlayer() {
               ? Number(videoFrame.totalDuration * 30)
               : 150
           }
-          compositionWidth={screenSize.width}
-          compositionHeight={screenSize.height}
+          compositionWidth={BASE_WIDTH}
+          compositionHeight={BASE_HEIGHT}
           fps={30}
           controls
           style={{
@@ -118,38 +55,12 @@ function RemotePlayer() {
           }}
           inputProps={{
             framelist: videoFrame?.frameList ?? [],
-            audioTrack: audioFiles[selectedAudio],
+            audioTrack: "",
           }}
-        />
-      </div>
-
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <Expand className="w-5 h-5" />
-          <Select
-            value={aspectRatio}
-            onValueChange={(value) => setAspectRatio(value as AspectRatioType)}
-          >
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Aspect Ratio" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.keys(aspectRatios).map((ratio) => (
-                <SelectItem key={ratio} value={ratio as AspectRatioType}>
-                  {ratio}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <AudioSelector
-          value={selectedAudio}
-          onValueChange={(value) => setSelectedAudio(value)}
         />
       </div>
     </div>
   );
 }
 
-export default RemotePlayer;
+export default RemotionPlayer;
