@@ -36,7 +36,9 @@ function UpdateFrameList() {
     setVideoFrame({
       frameList: newFrameList,
       totalDuration: newTotalDuration,
-      selectedFrameIndex: videoFrame.selectedFrameIndex
+      selectedFrameIndex: videoFrame.selectedFrameIndex,
+      aspectRatio: videoFrame.aspectRatio,
+      audioTrack: videoFrame.audioTrack,
     });
   }, [videoFrame, setVideoFrame]);
 
@@ -52,7 +54,9 @@ function UpdateFrameList() {
     setVideoFrame({
       frameList: updatedFrameList,
       totalDuration: newTotalDuration,
-      selectedFrameIndex: newSelectedIndex
+      selectedFrameIndex: newSelectedIndex,
+      aspectRatio: videoFrame.aspectRatio,
+      audioTrack: videoFrame.audioTrack,
     });
   }, [videoFrame, setVideoFrame]);
 

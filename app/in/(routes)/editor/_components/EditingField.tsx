@@ -125,6 +125,8 @@ export default function EditingField() {
       frameList: updatedFrames,
       totalDuration: newTotalDuration,
       selectedFrameIndex: videoFrame.selectedFrameIndex,
+      aspectRatio: videoFrame.aspectRatio,
+      audioTrack: videoFrame.audioTrack,
     });
   };
 

@@ -37,7 +37,9 @@ function FrameList() {
     setVideoFrame({
       frameList,
       totalDuration,
-      selectedFrameIndex: selectedFrame
+      selectedFrameIndex: selectedFrame,
+      aspectRatio: "16:9", 
+      audioTrack: "none" 
     });
   }, [frameList, setVideoFrame, selectedFrame]);
 
