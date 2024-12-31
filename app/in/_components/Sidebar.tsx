@@ -57,7 +57,7 @@ const Sidebar: React.FC = () => {
     {
       icon: <Camera className="w-5 h-5" />,
       label: "Scratch Editor",
-      href: "/in/editor",
+      href: "/in/scratch-editor",
     },
     {
       icon: <Sparkles className="w-5 h-5" />,

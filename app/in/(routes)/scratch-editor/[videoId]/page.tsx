@@ -12,7 +12,7 @@ import UpdateFrameList from "./_components/UpdateFrameList";
 import { CustomLoader } from "@/components/CustomLoader";
 import UpdatedRemotePlayer from "./_components/UpdateRemotionPlayer";
 
-export default function VideoEditor() {
+export default function ScratchVideoEditor() {
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [videoTitle, setVideoTitle] = useState("Untitled");

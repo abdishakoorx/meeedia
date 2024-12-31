@@ -17,7 +17,7 @@ const CreateButton: React.FC = () => {
       icon: <Camera className="w-5 h-5 text-blue-600" />,
       label: "Create from Scratch",
       description: "Full control over your video",
-      href: "/in/editor",
+      href: "/in/scratch-editor",
     },
     {
       icon: <Sparkles className="w-5 h-5 text-purple-600" />,

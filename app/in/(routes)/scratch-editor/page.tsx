@@ -63,7 +63,7 @@ export default function ScratchEditor() {
       toast.success('Video saved successfully');
       
       // Redirect to the video edit page
-      router.push(`/in/editor/${result.result[0].videoID}`);
+      router.push(`/in/scratch-editor/${result.result[0].videoID}`);
      
     } catch (error) {
       // console.error('Error saving video:', error);

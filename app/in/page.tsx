@@ -50,7 +50,7 @@ const Dashboard = () => {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Manual Creation Card */}
           <CreationCard
-            href="/in/editor"
+            href="/in/scratch-editor"
             icon={
               <Camera className="w-12 h-12 text-blue-600 dark:text-blue-400" />
             }
