@@ -143,7 +143,7 @@ export default function EditingField() {
 
   return (
     <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 space-y-6">
-      <h3 className="text-xl font-semibold mb-4">Edit Frame</h3>
+      {/* <h3 className="text-xl font-semibold mb-4">Edit Frame</h3> */}
 
       <Accordion type="single" collapsible className="w-full space-y-4">
         {/* Text Content Section */}
