@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { fontOptions } from "./Fonts";
 import { ANIMATION_OPTIONS } from "./Animations";
+import { ColorPickerPreview } from "./ColorPicker";
 
 const patterns = [
   { name: "None", value: "none" },
@@ -329,36 +330,26 @@ export default function EditingField() {
             Colors
           </AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="textColor">Text Color</Label>
-                <Input
-                  id="textColor"
-                  type="color"
-                  value={editValues.textColor}
-                  onChange={(e) =>
-                    setEditValues((prev) => ({
-                      ...prev,
-                      textColor: e.target.value,
-                    }))
+          <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <ColorPickerPreview
+                  label="Text"
+                  color={editValues.textColor}
+                  onChange={(color) =>
+                    setEditValues((prev) => ({ ...prev, textColor: color }))
                   }
-                  className="h-10"
                 />
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="backgroundColor">Background Color</Label>
-                <Input
-                  id="backgroundColor"
-                  type="color"
-                  value={editValues.backgroundColor}
-                  onChange={(e) =>
+              <div className="flex-1">
+                <ColorPickerPreview
+                  label="Background"
+                  color={editValues.backgroundColor}
+                  onChange={(color) =>
                     setEditValues((prev) => ({
                       ...prev,
-                      backgroundColor: e.target.value,
+                      backgroundColor: color,
                     }))
                   }
-                  className="h-10"
                 />
               </div>
             </div>

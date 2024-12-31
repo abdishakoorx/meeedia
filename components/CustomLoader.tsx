@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 export const CustomLoader = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black backdrop-blur-sm z-50">
       <div className="relative w-32 h-32">
         {/* AI "processing" circles */}
         {[...Array(3)].map((_, index) => (
