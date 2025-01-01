@@ -4,7 +4,7 @@ import { fontOptions } from "./Fonts";
 import { AnimationWrapper } from "./Animations";
 import { GRADIENT_OPTIONS } from "./Gradients";
 
-const patterns = {
+export const patterns = {
   none: "none",
   dots: "radial-gradient(circle at 2px 2px, rgba(0, 0, 0, 0.1) 2px, transparent 0)",
   lines: "repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 20px)",

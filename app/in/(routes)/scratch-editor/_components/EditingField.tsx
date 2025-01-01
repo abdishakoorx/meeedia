@@ -21,19 +21,19 @@ import {
 import { fontOptions } from "./Fonts";
 import { ANIMATION_OPTIONS } from "./Animations";
 import { ColorPickerPreview } from "./ColorPicker";
-import { GRADIENT_OPTIONS } from "./Gradients";
+import { BackgroundPreviewSection } from "./BackgroundPreview";
 
-const patterns = [
-  { name: "None", value: "none" },
-  { name: "Dots", value: "dots" },
-  { name: "Lines", value: "lines" },
-  { name: "Grid", value: "grid" },
-  { name: "Diagonal Lines", value: "diagonalLines" },
-  { name: "Waves", value: "waves" },
-  { name: "Zigzag", value: "zigzag" },
-  { name: "Stripes", value: "stripes" },
-  { name: "Checkerboard", value: "checkerboard" },
-];
+// const patterns = [
+//   { name: "None", value: "none" },
+//   { name: "Dots", value: "dots" },
+//   { name: "Lines", value: "lines" },
+//   { name: "Grid", value: "grid" },
+//   { name: "Diagonal Lines", value: "diagonalLines" },
+//   { name: "Waves", value: "waves" },
+//   { name: "Zigzag", value: "zigzag" },
+//   { name: "Stripes", value: "stripes" },
+//   { name: "Checkerboard", value: "checkerboard" },
+// ];
 
 const textCasingOptions = [
   { name: "Default", value: "default" },
@@ -376,46 +376,28 @@ export default function EditingField() {
               {editValues.backgroundType === "pattern" && (
                 <div className="space-y-2">
                   <Label>Pattern Style</Label>
-                  <Select
-                    value={editValues.pattern}
-                    onValueChange={(value) =>
-                      setEditValues((prev) => ({ ...prev, pattern: value }))
+                  <BackgroundPreviewSection
+                    type="pattern"
+                    currentPattern={editValues.pattern}
+                    currentColor={editValues.backgroundColor}
+                    onSelectPattern={(pattern) =>
+                      setEditValues((prev) => ({ ...prev, pattern }))
                     }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select pattern" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {patterns.map((pattern) => (
-                        <SelectItem key={pattern.value} value={pattern.value}>
-                          {pattern.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  />
                 </div>
               )}
 
               {editValues.backgroundType === "gradient" && (
                 <div className="space-y-2">
                   <Label>Gradient Style</Label>
-                  <Select
-                    value={editValues.gradient}
-                    onValueChange={(value) =>
-                      setEditValues((prev) => ({ ...prev, gradient: value }))
+                  <BackgroundPreviewSection
+                    type="gradient"
+                    currentGradient={editValues.gradient}
+                    currentColor={editValues.backgroundColor}
+                    onSelectGradient={(gradient) =>
+                      setEditValues((prev) => ({ ...prev, gradient }))
                     }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select gradient" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {GRADIENT_OPTIONS.map((gradient) => (
-                        <SelectItem key={gradient.value} value={gradient.value}>
-                          {gradient.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  />
                 </div>
               )}
             </div>
