@@ -13,6 +13,7 @@ const defaultFrame: Frame = {
   duration: 3,
   backgroundColor: "gray",
   fontFamily: "Inter",
+  backgroundType: "solid", // Added missing property
 };
 
 function FrameList() {

@@ -13,6 +13,7 @@ const defaultFrame: Frame = {
   duration: 3,
   backgroundColor: "white",
   fontFamily: "Arial",
+  backgroundType: "solid",
 };
 
 function UpdateFrameList() {
