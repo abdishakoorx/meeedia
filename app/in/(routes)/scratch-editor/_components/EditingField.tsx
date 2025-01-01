@@ -21,6 +21,7 @@ import {
 import { fontOptions } from "./Fonts";
 import { ANIMATION_OPTIONS } from "./Animations";
 import { ColorPickerPreview } from "./ColorPicker";
+import { GRADIENT_OPTIONS } from "./Gradients";
 
 const patterns = [
   { name: "None", value: "none" },
@@ -41,7 +42,6 @@ const textCasingOptions = [
   { name: "Capitalize", value: "capitalize" },
 ];
 
-
 export default function EditingField() {
   const { videoFrame, setVideoFrame } = useFramesList();
   const [editValues, setEditValues] = useState<{
@@ -59,6 +59,8 @@ export default function EditingField() {
     animation: string;
     animationDelay: number;
     textAlign: "left" | "center" | "right";
+    backgroundType: "solid" | "pattern" | "gradient";
+    gradient: string;
   }>({
     text: "",
     textColor: "#000000",
@@ -73,7 +75,9 @@ export default function EditingField() {
     textCasing: "default",
     animation: "none",
     animationDelay: 0,
-    textAlign: "center"
+    textAlign: "center",
+    backgroundType: "solid",
+    gradient: "",
   });
 
   useEffect(() => {
@@ -100,6 +104,8 @@ export default function EditingField() {
         animation: currentFrame.animation || "none",
         animationDelay: currentFrame.animationDelay || 0,
         textAlign: currentFrame.textAlign || "center",
+        backgroundType: currentFrame.backgroundType || "solid",
+        gradient: currentFrame.gradient || "",
       });
     }
   }, [videoFrame?.selectedFrameIndex, videoFrame?.frameList]);
@@ -270,17 +276,15 @@ export default function EditingField() {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
 
-        {/* Typography Section */}
-        <AccordionItem value="typography">
-          <AccordionTrigger className="text-base font-semibold">
-            Typography
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-6">
+              <ColorPickerPreview
+                label="Text"
+                color={editValues.textColor}
+                onChange={(color) =>
+                  setEditValues((prev) => ({ ...prev, textColor: color }))
+                }
+              />
+
               <div className="space-y-2">
                 <Label htmlFor="fontFamily">Font Style</Label>
                 <Select
@@ -324,62 +328,96 @@ export default function EditingField() {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Colors Section */}
-        <AccordionItem value="colors">
-          <AccordionTrigger className="text-base font-semibold">
-            Colors
-          </AccordionTrigger>
-          <AccordionContent>
-          <div className="flex items-center gap-4">
-              <div className="flex-1">
-                <ColorPickerPreview
-                  label="Text"
-                  color={editValues.textColor}
-                  onChange={(color) =>
-                    setEditValues((prev) => ({ ...prev, textColor: color }))
-                  }
-                />
-              </div>
-              <div className="flex-1">
-                <ColorPickerPreview
-                  label="Background"
-                  color={editValues.backgroundColor}
-                  onChange={(color) =>
-                    setEditValues((prev) => ({
-                      ...prev,
-                      backgroundColor: color,
-                    }))
-                  }
-                />
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-
         {/* Background Section */}
         <AccordionItem value="background">
           <AccordionTrigger className="text-base font-semibold">
-            Background Pattern
+            Background Style
           </AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-2">
-              <Select
-                value={editValues.pattern}
-                onValueChange={(value) =>
-                  setEditValues((prev) => ({ ...prev, pattern: value }))
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select pattern" />
-                </SelectTrigger>
-                <SelectContent>
-                  {patterns.map((pattern) => (
-                    <SelectItem key={pattern.value} value={pattern.value}>
-                      {pattern.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Background Type</Label>
+                <Select
+                  value={editValues.backgroundType}
+                  onValueChange={(value: "solid" | "pattern" | "gradient") =>
+                    setEditValues((prev) => ({
+                      ...prev,
+                      backgroundType: value,
+                    }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select background type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="solid">Solid Color</SelectItem>
+                    <SelectItem value="pattern">Pattern</SelectItem>
+                    <SelectItem value="gradient">Gradient</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {editValues.backgroundType === "solid" && (
+                <div className="space-y-2">
+                  <Label>Background Color</Label>
+                  <ColorPickerPreview
+                    label="Background"
+                    color={editValues.backgroundColor}
+                    onChange={(color) =>
+                      setEditValues((prev) => ({
+                        ...prev,
+                        backgroundColor: color,
+                      }))
+                    }
+                  />
+                </div>
+              )}
+
+              {editValues.backgroundType === "pattern" && (
+                <div className="space-y-2">
+                  <Label>Pattern Style</Label>
+                  <Select
+                    value={editValues.pattern}
+                    onValueChange={(value) =>
+                      setEditValues((prev) => ({ ...prev, pattern: value }))
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select pattern" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {patterns.map((pattern) => (
+                        <SelectItem key={pattern.value} value={pattern.value}>
+                          {pattern.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {editValues.backgroundType === "gradient" && (
+                <div className="space-y-2">
+                  <Label>Gradient Style</Label>
+                  <Select
+                    value={editValues.gradient}
+                    onValueChange={(value) =>
+                      setEditValues((prev) => ({ ...prev, gradient: value }))
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select gradient" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {GRADIENT_OPTIONS.map((gradient) => (
+                        <SelectItem key={gradient.value} value={gradient.value}>
+                          {gradient.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
             </div>
           </AccordionContent>
         </AccordionItem>

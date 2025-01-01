@@ -7,6 +7,8 @@ export interface Frame {
   fontSize: string;
   duration: number;
   backgroundColor: string;
+  backgroundType: 'solid' | 'pattern' | 'gradient';
+  gradient?: string;
   pattern?: string;
   fontFamily: string;
   isBold?: boolean;
