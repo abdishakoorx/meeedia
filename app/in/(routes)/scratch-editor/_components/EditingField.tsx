@@ -23,18 +23,6 @@ import { ANIMATION_OPTIONS } from "./Animations";
 import { ColorPickerPreview } from "./ColorPicker";
 import { BackgroundPreviewSection } from "./BackgroundPreview";
 
-// const patterns = [
-//   { name: "None", value: "none" },
-//   { name: "Dots", value: "dots" },
-//   { name: "Lines", value: "lines" },
-//   { name: "Grid", value: "grid" },
-//   { name: "Diagonal Lines", value: "diagonalLines" },
-//   { name: "Waves", value: "waves" },
-//   { name: "Zigzag", value: "zigzag" },
-//   { name: "Stripes", value: "stripes" },
-//   { name: "Checkerboard", value: "checkerboard" },
-// ];
-
 const textCasingOptions = [
   { name: "Default", value: "default" },
   { name: "Uppercase", value: "uppercase" },
@@ -278,7 +266,7 @@ export default function EditingField() {
               </div>
 
               <ColorPickerPreview
-                label="Text"
+                label="Text Color"
                 color={editValues.textColor}
                 onChange={(color) =>
                   setEditValues((prev) => ({ ...prev, textColor: color }))
@@ -313,7 +301,7 @@ export default function EditingField() {
                 <Slider
                   id="fontSize"
                   min={12}
-                  max={144}
+                  max={400}
                   step={1}
                   value={[parseInt(editValues.fontSize)]}
                   onValueChange={(value) =>
