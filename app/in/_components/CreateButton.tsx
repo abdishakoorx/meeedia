@@ -17,7 +17,7 @@ const CreateButton: React.FC = () => {
       icon: <Sparkles className="w-5 h-5 text-purple-600" />,
       label: "AI-Powered Creation",
       description: "Generate videos using advanced AI",
-      href: "/in/",
+      href: "/in/ai-editor",
     },
   ];
 

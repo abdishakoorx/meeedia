@@ -62,7 +62,7 @@ const Sidebar: React.FC = () => {
     {
       icon: <Sparkles className="w-5 h-5" />,
       label: "AI Editor",
-      href: "/in/ai",
+      href: "/in/ai-editor",
     },
     {
       icon: <Grid3x3 className="w-5 h-5" />,
