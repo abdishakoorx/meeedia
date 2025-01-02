@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import Header from "../../_components/HeaderNameProvider";
 import {
   Card,
@@ -22,24 +21,120 @@ import { Input } from "@/components/ui/input";
 import { Pencil, Trash2, Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
+interface Frame {
+  text: string;
+  pattern?: string;
+  gradient?: string;
+  duration: number;
+  fontSize: string | number;
+  textColor: string;
+  fontFamily: string;
+  textAlign?: string;
+  backgroundType?: string;
+  backgroundColor: string;
+  textCasing?: string;
+  animation?: string;
+  animationDelay?: number;
+  isBold?: boolean;
+  isItalic?: boolean;
+  isUnderline?: boolean;
+}
+
 interface Video {
   videoID: string;
   title: string;
   videoType: string;
   description: {
     frames: Frame[];
+    audioTrack?: string;
+    aspectRatio: string;
+    totalDuration: number;
   };
 }
 
-interface Frame {
-  backgroundColor: string;
-  image?: string;
-  text: string;
-  textColor: string;
-  fontFamily: string;
-  fontSize: number;
-  duration: number;
-}
+const getGradientStyle = (gradient: string): string => {
+  const gradients: { [key: string]: string } = {
+    sunset: "linear-gradient(135deg, #FF512F 0%, #DD2476 100%)",
+    ocean: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)",
+    forest: "linear-gradient(135deg, #134E5E 0%, #71B280 100%)",
+    purpleHaze: "linear-gradient(135deg, #7303c0 0%, #ec38bc 100%)",
+    desert: "linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%)",
+    northernLights: "linear-gradient(135deg, #43cea2 0%, #185a9d 100%)",
+    fire: "linear-gradient(135deg, #f12711 0%, #f5af19 100%)",
+    coolBlues: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)",
+    lavenderDream: "linear-gradient(135deg, #C04848 0%, #480048 100%)",
+    peachMelba:
+      "linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)",
+    aquaSplash: "linear-gradient(135deg, #13547a 0%, #80d0c7 100%)",
+    citrusBurst: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)",
+    berrySmoothie: "linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%)",
+    mistyRose: "linear-gradient(135deg, #eecda3 0%, #ef629f 100%)",
+    emeraldGlow: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
+    goldenHour: "linear-gradient(135deg, #fceabb 0%, #f8b500 100%)",
+    royalFlush: "linear-gradient(135deg, #360033 0%, #0b8793 100%)",
+    candyShop: "linear-gradient(135deg, #ff6a00 0%, #ee0979 100%)",
+    galaxy: "linear-gradient(135deg, #654ea3 0%, #eaafc8 100%)",
+    deepSpace: "linear-gradient(135deg, #000428 0%, #004e92 100%)",
+  };
+  return gradients[gradient] || gradients.purpleHaze;
+};
+
+const getPatternStyle = (
+  pattern: string,
+  backgroundColor: string
+): React.CSSProperties => {
+  const patterns: { [key: string]: React.CSSProperties } = {
+    dots: {
+      backgroundColor,
+      backgroundImage:
+        "radial-gradient(circle at center, #000 2px, transparent 2px)",
+      backgroundSize: "20px 20px",
+    },
+    zigzag: {
+      backgroundColor,
+      backgroundImage:
+        "linear-gradient(135deg, rgba(0,0,0,0.1) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1) 75%, transparent 75%, transparent)",
+      backgroundSize: "20px 20px",
+    },
+    lines: {
+      backgroundColor,
+      backgroundImage:
+        "repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 20px)",
+      backgroundSize: "20px 20px",
+    },
+    grid: {
+      backgroundColor,
+      backgroundImage:
+        "repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 20px), repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 20px)",
+      backgroundSize: "20px 20px",
+    },
+    diagonalLines: {
+      backgroundColor,
+      backgroundImage:
+        "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 15px)",
+      backgroundSize: "20px 20px",
+    },
+    waves: {
+      backgroundColor,
+      backgroundImage:
+        "repeating-radial-gradient(circle at 0 0, transparent 0, rgba(0, 0, 0, 0.1) 2px, transparent 4px)",
+      backgroundSize: "20px 20px",
+    },
+    stripes: {
+      backgroundColor,
+      backgroundImage:
+        "repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 10px, transparent 10px, transparent 20px)",
+      backgroundSize: "20px 20px",
+    },
+    checkerboard: {
+      backgroundColor,
+      backgroundImage:
+        "repeating-conic-gradient(rgba(0, 0, 0, 0.1) 0% 25%, transparent 0% 50%)",
+      backgroundSize: "20px 20px",
+    },
+  };
+  return patterns[pattern] || { backgroundColor };
+};
 
 function Projects() {
   const { user } = useUser();
@@ -78,6 +173,20 @@ function Projects() {
     fetchVideos();
   }, [fetchVideos]);
 
+  const getBackgroundStyle = (frame: Frame): React.CSSProperties => {
+    if (frame.backgroundType === "gradient" && frame.gradient) {
+      return {
+        background: getGradientStyle(frame.gradient),
+      };
+    }
+    if (frame.backgroundType === "pattern" && frame.pattern) {
+      return getPatternStyle(frame.pattern, frame.backgroundColor);
+    }
+    return {
+      backgroundColor: frame.backgroundColor,
+    };
+  };
+
   const handleEdit = (video: Video) => {
     const editorType =
       video.videoType === "From scratch" ? "scratch-editor" : "ai-editor";
@@ -92,13 +201,12 @@ function Projects() {
 
     setIsDeleting(true);
     try {
-      const response = await fetch(`/api/video/${video.videoID}`, {
+      const response = await fetch(`/api/delete-video/${video.videoID}`, {
         method: "DELETE",
       });
 
-      toast.success("Video deleted successfully.");
-
       if (response.ok) {
+        toast.success("Video deleted successfully.");
         setVideos(videos.filter((v) => v.videoID !== video.videoID));
         setDeleteTitle("");
       } else {
@@ -112,7 +220,6 @@ function Projects() {
   };
 
   const handleDownload = async (video: Video) => {
-    // Placeholder for download functionality
     console.log("Downloading video:", video.videoID);
   };
 
@@ -123,6 +230,19 @@ function Projects() {
       </div>
     );
   }
+
+  const getFittedFontSize = (frame: Frame, containerWidth: number): number => {
+    // Convert fontSize to number if it's a string
+    const originalSize =
+      typeof frame.fontSize === "string"
+        ? parseInt(frame.fontSize, 10)
+        : frame.fontSize;
+
+    // Base the scaling on container width
+    // Assuming original design was for 1920px width
+    const scaleFactor = containerWidth / 1920;
+    return Math.max(12, Math.floor(originalSize * scaleFactor)); // Minimum 12px font size
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
@@ -138,7 +258,7 @@ function Projects() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {videos.map((video) => (
               <Card key={video.videoID} className="relative">
                 <CardHeader>
@@ -146,41 +266,61 @@ function Projects() {
                   <CardDescription>Type: {video.videoType}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div
-                    className="aspect-video rounded-md overflow-hidden"
-                    style={{
-                      backgroundColor:
-                        video.description.frames[0].backgroundColor,
-                    }}
-                  >
-                    {video.description.frames[0].image ? (
-                      <Image
-                        src={video.description.frames[0].image}
-                        alt={video.title}
-                        width={300}
-                        height={169}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
+                  <div className="aspect-video rounded-md overflow-hidden relative">
+                    <div
+                      className="w-full h-full flex items-center justify-center p-4 absolute inset-0"
+                      style={{
+                        ...getBackgroundStyle(video.description.frames[0]),
+                      }}
+                    >
                       <div
-                        className="w-full h-full flex items-center justify-center"
+                        className="text-center w-full break-words overflow-hidden flex items-center justify-center"
                         style={{
                           color: video.description.frames[0].textColor,
                           fontFamily: video.description.frames[0].fontFamily,
-                          fontSize: `${video.description.frames[0].fontSize}px`,
+                          fontSize: `${getFittedFontSize(
+                            video.description.frames[0],
+                            320
+                          )}px`, // 320px is approximate card width
+                          textAlign:
+                            (video.description.frames[0]
+                              .textAlign as React.CSSProperties["textAlign"]) ||
+                            "center",
+                          fontWeight: video.description.frames[0].isBold
+                            ? "bold"
+                            : "normal",
+                          fontStyle: video.description.frames[0].isItalic
+                            ? "italic"
+                            : "normal",
+                          textDecoration: video.description.frames[0]
+                            .isUnderline
+                            ? "underline"
+                            : "none",
+                          textTransform:
+                            (video.description.frames[0]
+                              .textCasing as React.CSSProperties["textTransform"]) ||
+                            "none",
+                          maxHeight: "100%",
+                          maxWidth: "100%",
+                          wordBreak: "break-word",
+                          lineHeight: 1.2,
+                          padding: "0.5rem",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: "vertical",
                         }}
                       >
                         {video.description.frames[0].text}
                       </div>
-                    )}
+                    </div>
                   </div>
                 </CardContent>
-                <CardFooter className="flex justify-between">
+                <CardFooter className="flex gap-4">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleEdit(video)}
-                    className="hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
+                    className="flex-1 hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
@@ -188,7 +328,7 @@ function Projects() {
                     variant="outline"
                     size="sm"
                     onClick={() => handleDownload(video)}
-                    className="hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
+                    className="flex-1 hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
                   >
                     <Download className="h-4 w-4" />
                   </Button>
@@ -197,7 +337,7 @@ function Projects() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
+                        className="flex-1 hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -237,9 +377,7 @@ function Projects() {
                             </Button>
                             <Button
                               variant="outline"
-                              onClick={() => {
-                                setDeleteTitle("");
-                              }}
+                              onClick={() => setDeleteTitle("")}
                               className="text-black hover:text-black bg-gray-200 hover:bg-gray-200 flex-1"
                             >
                               Cancel
