@@ -1,14 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  Camera,
-  Upload,
-  Sparkles,
-  Grid3x3,
-  ChevronRight,
-  Info,
-} from "lucide-react";
+import { Camera, Sparkles, Grid3x3, Info } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   Tooltip,
@@ -19,6 +12,7 @@ import {
 import Header from "./_components/HeaderNameProvider";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import RecentVideos from "./_components/RecentVideos";
 
 const Dashboard = () => {
   return (
@@ -55,72 +49,39 @@ const Dashboard = () => {
               <Camera className="w-12 h-12 text-blue-600 dark:text-blue-400" />
             }
             title="Create from Scratch"
-            description="Take full control. Upload your own content, select templates, and craft your video manually."
+            description="Upload your content, select templates, and fully customize your video."
             buttonText="Start from Scratch"
             buttonColor="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
-            newUserTip="Ideal for users who want complete control over their video creation process."
+            newUserTip="Best for users seeking full customization."
           />
 
-          {/* AI-Powered Creation Card */}
           <CreationCard
             href=""
             icon={
               <Sparkles className="w-12 h-12 text-purple-600 dark:text-purple-400" />
             }
             title="AI-Powered Creation"
-            description="Let our advanced AI generate a video based on your description, style preferences, and goals."
+            description="Generate videos with AI using your descriptions and preferences."
             buttonText="Generate with AI"
             buttonColor="bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600"
-            newUserTip="Perfect for quick, AI-generated videos based on your ideas."
+            newUserTip="Great for quick AI-generated videos."
           />
 
-          {/* Templates Card */}
           <CreationCard
             href=""
             icon={
               <Grid3x3 className="w-12 h-12 text-green-600 dark:text-green-400" />
             }
-            title="Video Templates"
-            description="Browse our collection of pre-designed templates to jumpstart your video creation process."
-            buttonText="Explore Templates"
+            title="Projects"
+            description="View and edit your previously saved videos easily."
+            buttonText="Saved Videos"
             buttonColor="bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"
-            newUserTip="Great for beginners or those looking for a quick start with professional designs."
+            newUserTip="Access and update your saved projects."
           />
         </div>
 
         {/* Recent Uploads / Quick Actions */}
-        <motion.section
-          className="mt-12 bg-gray-100 dark:bg-gray-900 shadow-sm dark:shadow-xl rounded-2xl p-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-              Recent Uploads
-            </h3>
-            <Button
-              variant={"ghost"}
-              className="text-blue-600 dark:text-blue-400 hover:bg-transparent hover:text-blue-800 dark:hover:text-blue-300 transition-colors duration-200 flex items-center"
-            >
-              Upload New
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Button>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((item) => (
-              <div
-                key={item}
-                className="bg-gray-200 dark:bg-gray-800 rounded-lg aspect-video flex items-center justify-center transition-all duration-200 hover:bg-gray-300 dark:hover:bg-gray-700 cursor-pointer"
-              >
-                <Upload className="text-gray-400 dark:text-gray-500 w-6 h-6" />
-                <span className="ml-2 text-gray-500 dark:text-gray-400 text-sm">
-                  Empty Slot
-                </span>
-              </div>
-            ))}
-          </div>
-        </motion.section>
+        <RecentVideos />
       </main>
     </div>
   );
