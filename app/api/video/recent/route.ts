@@ -19,7 +19,7 @@ export async function POST(req: Request) {
             .from(VIDEO_RAW_TABLE)
             .where(eq(VIDEO_RAW_TABLE.createdBy, email))
             .orderBy(desc(VIDEO_RAW_TABLE.id))
-            .limit(4);
+            .limit(3);
 
         return NextResponse.json({ videos });
     } catch (error) {
