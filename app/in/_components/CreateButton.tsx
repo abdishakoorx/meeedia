@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Sparkles,
-  Camera,
-  Grid3x3,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { Sparkles, Camera, ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
@@ -23,12 +17,6 @@ const CreateButton: React.FC = () => {
       icon: <Sparkles className="w-5 h-5 text-purple-600" />,
       label: "AI-Powered Creation",
       description: "Generate videos using advanced AI",
-      href: "/in/",
-    },
-    {
-      icon: <Grid3x3 className="w-5 h-5 text-green-600" />,
-      label: "Use Template",
-      description: "Start with pre-designed layouts",
       href: "/in/",
     },
   ];

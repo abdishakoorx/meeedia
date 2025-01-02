@@ -66,8 +66,8 @@ const Sidebar: React.FC = () => {
     },
     {
       icon: <Grid3x3 className="w-5 h-5" />,
-      label: "Templates",
-      href: "/in/templates",
+      label: "Projects",
+      href: "/in/projects",
     },
   ];
 
