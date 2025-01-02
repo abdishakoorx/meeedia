@@ -8,8 +8,8 @@ export async function GET(
   context: { params: { videoId: string } }
 ) {
   try {
-    const { params } = await context;
-    const videoId = params.videoId;
+    // Await context.params before accessing its properties
+    const { videoId } = await context.params;
 
     const result = await db
       .select()
@@ -44,10 +44,11 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  { params }: { params: { videoId: string } }
+  context: { params: { videoId: string } }
 ) {
   try {
-    const videoId = params.videoId;
+    // Await context.params before accessing its properties
+    const { videoId } = await context.params;
     const { user_email, video_type, title, description } = await req.json();
 
     // Validation
