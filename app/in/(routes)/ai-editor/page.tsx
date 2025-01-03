@@ -84,9 +84,6 @@ const AIVideoEditor = () => {
         description: {
           ...videoData,
           aspectRatio: formData.aspectRatio,
-          formData: {
-            ...formData
-          }
         }
       };
 
@@ -112,7 +109,7 @@ const AIVideoEditor = () => {
       router.push(`/in/ai-editor/${savedResult.result[0].videoID}`);
 
     } catch (error) {
-      console.error("Error:", error);
+      // console.error("Error:", error);
       setError(error instanceof Error ? error.message : 'An error occurred while processing your request');
       toast.error(error instanceof Error ? error.message : 'Failed to process video');
     } finally {
