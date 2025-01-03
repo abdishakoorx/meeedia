@@ -18,6 +18,10 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Header from "../../_components/HeaderNameProvider";
 import { generateAIPrompt } from "./_component/prompt";
 import { chatSession } from "@/Config/CreatePrompt";
+import { useUser } from "@clerk/nextjs";
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const AIVideoEditor = () => {
   const [formData, setFormData] = useState({
@@ -31,9 +35,11 @@ const AIVideoEditor = () => {
     additionalNotes: "",
     aspectRatio: "16:9",
   });
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generationError, setGenerationError] = useState<string | null>(null);
-  const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
+  const { user } = useUser();
+  const router = useRouter();
 
   interface FormData {
     title: string;
@@ -49,11 +55,15 @@ const AIVideoEditor = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsGenerating(true);
-    setGenerationError(null);
-    setGeneratedVideo(null);
+    setIsProcessing(true);
+    setError(null);
 
     try {
+      // Check if user is authenticated
+      if (!user?.primaryEmailAddress?.emailAddress) {
+        throw new Error('Please sign in to generate and save your video');
+      }
+
       // Generate the prompt using the form data
       const prompt = generateAIPrompt(formData);
       
@@ -62,21 +72,51 @@ const AIVideoEditor = () => {
       const response = await result.response.text();
       
       // Extract JSON from the response
-      // The response might include ```json and ``` markers, so we need to clean it
       const jsonStr = response.replace(/```json\n?/, '').replace(/```\n?/, '');
       const videoData = JSON.parse(jsonStr);
+
+      // Prepare video data for saving
+      const saveData = {
+        video_id: uuidv4(),
+        user_email: user.primaryEmailAddress.emailAddress,
+        video_type: "AI Generated",
+        title: formData.title || "Untitled",
+        description: {
+          ...videoData,
+          aspectRatio: formData.aspectRatio,
+          formData: {
+            ...formData
+          }
+        }
+      };
+
+      // Save the video
+      const saveResponse = await fetch('/api/video', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(saveData),
+      });
+
+      if (!saveResponse.ok) {
+        const errorData = await saveResponse.json();
+        throw new Error(errorData.message || 'Failed to save video');
+      }
+
+      const savedResult = await saveResponse.json();
       
-      // Store the generated video data
-      setGeneratedVideo(JSON.stringify(videoData, null, 2));
-      console.log("Generated video data:", videoData);
+      toast.success('Video generated and saved successfully');
       
+      // Redirect to the video edit page
+      router.push(`/in/ai-editor/${savedResult.result[0].videoID}`);
+
     } catch (error) {
-      console.error("Generation error:", error);
-      setGenerationError(
-        "An error occurred while generating the video. Please try again."
-      );
+      console.error("Error:", error);
+      setError(error instanceof Error ? error.message : 'An error occurred while processing your request');
+      toast.error(error instanceof Error ? error.message : 'Failed to process video');
     } finally {
-      setIsGenerating(false);
+      setIsProcessing(false);
     }
   };
 
@@ -203,33 +243,22 @@ const AIVideoEditor = () => {
                 />
               </div>
 
-              {generationError && (
+              {error && (
                 <Alert variant="destructive">
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Error</AlertTitle>
-                  <AlertDescription>{generationError}</AlertDescription>
+                  <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
 
-              {generatedVideo && (
-                <div className="space-y-2">
-                  <Label>Generated Video Data</Label>
-                  <Textarea
-                    value={generatedVideo}
-                    readOnly
-                    className="h-24"
-                  />
-                </div>
-              )}
-
-              <Button type="submit" className="w-full" disabled={isGenerating}>
-                {isGenerating ? (
+              <Button type="submit" className="w-full" disabled={isProcessing}>
+                {isProcessing ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Generating Video...
+                    Processing...
                   </>
                 ) : (
-                  "Generate Video"
+                  "Generate & Save Video"
                 )}
               </Button>
             </form>
@@ -240,4 +269,3 @@ const AIVideoEditor = () => {
 };
 
 export default AIVideoEditor;
-
