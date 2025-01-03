@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const audioFiles = {
+export const audioFiles = {
   none: "",
   siren: "/videos/siren.mp3",
   choir: "/videos/choir.mp3",

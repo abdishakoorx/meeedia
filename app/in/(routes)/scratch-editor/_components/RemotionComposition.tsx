@@ -14,7 +14,17 @@ export const patterns = {
   zigzag: "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0px, transparent 10px, transparent 20px), repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 0px, transparent 10px, transparent 20px)",
   stripes: "repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 10px, transparent 10px, transparent 20px)",
   checkerboard: "repeating-conic-gradient(rgba(0, 0, 0, 0.1) 0% 25%, transparent 0% 50%)",
+  triangles: "repeating-linear-gradient(60deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 15px, transparent 15px, transparent 30px)",
+  crosshatch: "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0px, transparent 15px), repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.1) 0px, transparent 15px)",
+  plaid: "repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 5px, transparent 5px, transparent 10px), repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 5px, transparent 5px, transparent 10px)",
+  diagonalStripesWide: "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 2px, transparent 20px)",
+  concentricCircles: "radial-gradient(circle, rgba(0, 0, 0, 0.1) 10px, transparent 1px, transparent 10px)",
+  spiral: "conic-gradient(rgba(0, 0, 0, 0.1) 10%, transparent 10%)",
+  starburst: "repeating-conic-gradient(rgba(0, 0, 0, 0.1) 0% 10%, transparent 10% 20%)",
+  brushedMetal: "linear-gradient(135deg, rgba(0, 0, 0, 0.05) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0.05) 75%, transparent 75%, transparent 100%)",
+  lattice: "repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 10px), repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 10px)",
 };
+
 
 type TextTransform = "none" | "capitalize" | "uppercase" | "lowercase";
 

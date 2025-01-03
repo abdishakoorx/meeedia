@@ -99,4 +99,109 @@ export const GRADIENT_OPTIONS = [
     value: "deepSpace",
     style: "linear-gradient(45deg, #000428 0%, #004e92 100%)",
   },
+  {
+    name: "Iceberg",
+    value: "iceberg",
+    style: "linear-gradient(45deg, #76b852 0%, #8DC26F 100%)",
+  },
+  {
+    name: "Midnight City",
+    value: "midnightCity",
+    style: "linear-gradient(45deg, #232526 0%, #414345 100%)",
+  },
+  {
+    name: "Pink Lemonade",
+    value: "pinkLemonade",
+    style: "linear-gradient(45deg, #f6d365 0%, #fda085 100%)",
+  },
+  {
+    name: "Blue Lagoon",
+    value: "blueLagoon",
+    style: "linear-gradient(45deg, #43c6ac 0%, #191654 100%)",
+  },
+  {
+    name: "Velvet",
+    value: "velvet",
+    style: "linear-gradient(45deg, #DA4453 0%, #89216B 100%)",
+  },
+  {
+    name: "Sunrise Glow",
+    value: "sunriseGlow",
+    style: "linear-gradient(45deg, #FF5F6D 0%, #FFC371 100%)",
+  },
+  {
+    name: "Arctic Dawn",
+    value: "arcticDawn",
+    style: "linear-gradient(45deg, #3A1C71 0%, #D76D77 50%, #FFAF7B 100%)",
+  },
+  {
+    name: "Sea Breeze",
+    value: "seaBreeze",
+    style: "linear-gradient(45deg, #00B4DB 0%, #0083B0 100%)",
+  },
+  {
+    name: "Tropical Sunset",
+    value: "tropicalSunset",
+    style: "linear-gradient(45deg, #FA709A 0%, #FEE140 100%)",
+  },
+  {
+    name: "Mocha",
+    value: "mocha",
+    style: "linear-gradient(45deg, #4e342e 0%, #8d6e63 100%)",
+  },
+  {
+    name: "Neon Dreams",
+    value: "neonDreams",
+    style: "linear-gradient(45deg, #FF4E50 0%, #F9D423 100%)",
+  },
+  {
+    name: "Frosted Glass",
+    value: "frostedGlass",
+    style: "linear-gradient(45deg, #FFFFFF 0%, #E4E5E6 100%)",
+  },
+  {
+    name: "Aurora Borealis",
+    value: "auroraBorealis",
+    style: "linear-gradient(45deg, #5C258D 0%, #4389A2 100%)",
+  },
+  {
+    name: "Golden Sand",
+    value: "goldenSand",
+    style: "linear-gradient(45deg, #F4E2D8 0%, #BA5370 100%)",
+  },
+  {
+    name: "Peacock",
+    value: "peacock",
+    style: "linear-gradient(45deg, #6190E8 0%, #A7BFE8 100%)",
+  },
+  {
+    name: "Cobalt Dreams",
+    value: "cobaltDreams",
+    style: "linear-gradient(45deg, #00416A 0%, #E4E5E6 100%)",
+  },
+  {
+    name: "Citrus Grove",
+    value: "citrusGrove",
+    style: "linear-gradient(45deg, #FF8008 0%, #FFC837 100%)",
+  },
+  {
+    name: "Berry Delight",
+    value: "berryDelight",
+    style: "linear-gradient(45deg, #FF512F 0%, #DD2476 100%)",
+  },
+  {
+    name: "Rainforest",
+    value: "rainforest",
+    style: "linear-gradient(45deg, #11998E 0%, #38EF7D 100%)",
+  },
+  {
+    name: "Ethereal Glow",
+    value: "etherealGlow",
+    style: "linear-gradient(45deg, #fff1eb 0%, #ace0f9 100%)",
+  },
+  {
+    name: "Rose Gold",
+    value: "roseGold",
+    style: "linear-gradient(45deg, #F4C4F3 0%, #FC67FA 100%)",
+  },
 ];
