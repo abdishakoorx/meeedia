@@ -18,8 +18,9 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Pencil, Trash2, Loader2 } from "lucide-react";
+import { Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import Loader from "@/components/Loader";
 
 interface Frame {
   text: string;
@@ -220,11 +221,7 @@ function Projects() {
   };
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin" />
-      </div>
-    );
+    return <Loader />;
   }
 
   const getFittedFontSize = (frame: Frame, containerWidth: number): number => {
@@ -262,7 +259,10 @@ function Projects() {
                   <CardDescription>Type: {video.videoType}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="aspect-video rounded-md overflow-hidden relative">
+                  <div
+                    className="aspect-video rounded-md overflow-hidden relative cursor-pointer"
+                    onClick={() => handleEdit(video)}
+                  >
                     <div
                       className="w-full h-full flex items-center justify-center p-4 absolute inset-0"
                       style={{
@@ -311,22 +311,10 @@ function Projects() {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="flex gap-4">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleEdit(video)}
-                    className="flex-1 hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
+                <CardFooter className="flex justify-end items-center">
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
-                      >
+                      <Button className="hover:scale-110 hover:bg-red-700 hover:text-white rounded-2xl border-none  bg-red-700 text-white">
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </PopoverTrigger>

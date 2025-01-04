@@ -77,7 +77,7 @@ export default function ScratchEditor() {
 
   return (
     <div className="space-y-2">
-      <Header headerName="Create New Video" />
+      <Header headerName="Create Video" />
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-4">
         <div className="mb-6 flex justify-end px-2">
           <Button
