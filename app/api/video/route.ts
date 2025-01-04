@@ -2,6 +2,7 @@ import { db } from '@/db';
 import { VIDEO_RAW_TABLE } from '@/db/schema';
 import { NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
+import { checkUserTokens, deductTokens } from '../token-management/route';
 
 export async function POST(req: Request) {
     try {
@@ -13,6 +14,15 @@ export async function POST(req: Request) {
                 { message: "Missing required fields" },
                 { status: 400 }
             );
+        }
+
+        // Check if user has enough tokens
+        const tokenCheck = await checkUserTokens(user_email);
+        if (!tokenCheck.hasEnoughTokens) {
+            return NextResponse.json({
+                message: `Insufficient tokens. Required: ${tokenCheck.requiredTokens}, Available: ${tokenCheck.currentTokens}`,
+                tokenCheck
+            }, { status: 403 });
         }
 
         if (!description?.frames || description.frames.length === 0) {
@@ -35,7 +45,11 @@ export async function POST(req: Request) {
             );
         }
    
-        const result = await db.insert(VIDEO_RAW_TABLE)
+        // First, deduct tokens
+        const newTokenBalance = await deductTokens(user_email);
+
+        // Then create video
+        const videoResult = await db.insert(VIDEO_RAW_TABLE)
             .values({
                 videoID: video_id,
                 title: title || "Untitled",
@@ -52,9 +66,19 @@ export async function POST(req: Request) {
                 createdBy: VIDEO_RAW_TABLE.createdBy
             });
 
-        return NextResponse.json({ result });
+        return NextResponse.json({ 
+            result: videoResult[0],
+            tokenBalance: newTokenBalance 
+        });
     } catch (error) {
         console.error('Error saving video:', error);
+        // If this is a token-related error, we might want to handle it specifically
+        if (error instanceof Error && error.message.includes('tokens')) {
+            return NextResponse.json(
+                { message: error.message },
+                { status: 403 }
+            );
+        }
         return NextResponse.json(
             { message: "Internal server error" },
             { status: 500 }
