@@ -9,7 +9,6 @@ import {
   SidebarOpen,
   LoaderPinwheel,
   Coins,
-  X,
   Camera,
   Sparkles,
   Grid3x3,
@@ -122,23 +121,16 @@ const Sidebar: React.FC = () => {
           {isMobile && !isCollapsed && (
             <button
               onClick={toggleSidebar}
-              className="
-                absolute 
-                top-4 
-                right-4 
-                z-50 
-                text-gray-600 
-                dark:text-gray-300
-              "
+              className="absolute top-4 right-4 z-50 mt-3 dark:text-gray-300 text-gray-700"
             >
-              <X className="w-6 h-6" />
+              <SidebarClose className="w-6 h-6" />
             </button>
           )}
 
           {!isMobile && (
             <div
               onClick={toggleSidebar}
-              className="absolute top-6 right-4 transition rounded-full z-5 p-2 dark:text-accent text-accent-dark"
+              className="absolute top-6 right-4 transition rounded-full z-5 p-2 dark:text-gray-300 text-gray-700"
             >
               {isCollapsed ? (
                 <SidebarOpen className="w-6 h-6" />
@@ -256,7 +248,7 @@ const Sidebar: React.FC = () => {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent
-                className="w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg p-2"
+                className="w-48 bg-white dark:bg-gray-700 hover:bg-transparent cursor-pointer rounded-md shadow-lg p-2"
                 sideOffset={8}
               >
                 <DropdownMenuItem>
