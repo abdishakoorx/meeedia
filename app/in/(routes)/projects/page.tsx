@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Pencil, Trash2, Download, Loader2 } from "lucide-react";
+import { Pencil, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 interface Frame {
@@ -219,10 +219,6 @@ function Projects() {
     }
   };
 
-  const handleDownload = async (video: Video) => {
-    console.log("Downloading video:", video.videoID);
-  };
-
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -323,14 +319,6 @@ function Projects() {
                     className="flex-1 hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
                   >
                     <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDownload(video)}
-                    className="flex-1 hover:bg-accent hover:scale-110 text-black hover:text-black dark:hover:bg-accent-dark dark:hover:text-white"
-                  >
-                    <Download className="h-4 w-4" />
                   </Button>
                   <Popover>
                     <PopoverTrigger asChild>

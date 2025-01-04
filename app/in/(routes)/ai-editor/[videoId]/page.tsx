@@ -1,5 +1,5 @@
 "use client";
-import { Download, Save, Pencil, Check } from "lucide-react";
+import { Save, Pencil, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "../../../_components/HeaderNameProvider";
 import { useCallback, useState, useEffect } from "react";
@@ -131,9 +131,9 @@ export default function AISavedVideoEditor() {
     <div className="space-y-2">
       <Header headerName="Edit Video" />
       <div className="max-w-7xl mx-auto px-4 py-8 md:py-4">
-        <div className="mb-6 flex flex-col md:flex-row md:justify-between items-center gap-4 md:gap-0">
+        <div className="mb-6 flex justify-between items-center">
           {/* Title Section */}
-          <div className="w-full md:w-1/2">
+          <div className="">
             {isEditingTitle ? (
               <div className="flex gap-2 items-center">
                 <input
@@ -170,14 +170,10 @@ export default function AISavedVideoEditor() {
           </div>
 
           {/* Action Buttons */}
-          <div className="w-full md:w-1/4 flex gap-2">
-            <Button className="w-1/2 text-white bg-blue-500 hover:bg-blue-700">
-              <Download className="w-5 h-5 mr-2" />
-              Export
-            </Button>
+          <div className="">
             <Button
               variant="outline"
-              className="w-1/2 bg-white text-black border border-gray-300 hover:bg-gray-100 hover:text-black"
+              className="bg-white w-44 text-black border border-gray-300 hover:bg-gray-100 hover:text-black"
               onClick={() => handleUpdate()}
               disabled={isSaving || !user || !videoFrame?.frameList.length}
             >

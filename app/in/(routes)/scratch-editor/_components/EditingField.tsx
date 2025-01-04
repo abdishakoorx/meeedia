@@ -147,7 +147,7 @@ export default function EditingField() {
             Text Content
           </AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-6">
+            <div className="space-y-6 px-2">
               <div className="space-y-2">
                 <Label htmlFor="text">Text</Label>
                 <Input
@@ -322,7 +322,7 @@ export default function EditingField() {
             Background Style
           </AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-4">
+            <div className="space-y-4 px-2">
               <div className="space-y-2">
                 <Label>Background Type</Label>
                 <Select
@@ -349,7 +349,7 @@ export default function EditingField() {
                 <div className="space-y-2">
                   <Label>Background Color</Label>
                   <ColorPickerPreview
-                    label="Background"
+                    label=""
                     color={editValues.backgroundColor}
                     onChange={(color) =>
                       setEditValues((prev) => ({
@@ -398,7 +398,7 @@ export default function EditingField() {
             Duration
           </AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-2">
+            <div className="space-y-2 px-2">
               <Label htmlFor="duration">Duration: {editValues.duration}s</Label>
               <Slider
                 id="duration"
@@ -420,7 +420,7 @@ export default function EditingField() {
             Animation
           </AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-4">
+            <div className="space-y-4 px-2">
               <div className="space-y-2">
                 <Label htmlFor="animation">Animation Type</Label>
                 <Select
