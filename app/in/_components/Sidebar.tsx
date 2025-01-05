@@ -8,7 +8,6 @@ import {
   SidebarClose,
   SidebarOpen,
   LoaderPinwheel,
-  Coins,
   Camera,
   Sparkles,
   Grid3x3,
@@ -16,7 +15,6 @@ import {
 import { Logo } from "@/components/logo";
 import { UserDetails } from "@/app/_context/UserDetails";
 import { SignOutButton, UserButton } from "@clerk/nextjs";
-import { Progress } from "@/components/ui/progress";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useDashboard } from "../DashboardProvider";
+import TokenRefresh from "./TokenRefresh";
 
 interface SidebarItem {
   icon: React.ReactNode;
@@ -178,7 +177,7 @@ const Sidebar: React.FC = () => {
         </div>
 
         <div className="mt-auto">
-          <div className="p-4 border-t border-gray-300 dark:border-gray-700">
+          {/* <div className="p-4 border-t border-gray-300 dark:border-gray-700">
             <div className="flex items-center justify-between mb-2">
               {!isMobile && isCollapsed ? (
                 <Coins className="h-6 w-6 text-yellow-500" />
@@ -211,7 +210,9 @@ const Sidebar: React.FC = () => {
                 )}
               </>
             )}
-          </div>
+          </div> */}
+
+          <TokenRefresh isCollapsed={isCollapsed} isMobile={isMobile} />
 
           <div className="p-4 bg-gray-50 dark:bg-gray-900">
             <DropdownMenu>
