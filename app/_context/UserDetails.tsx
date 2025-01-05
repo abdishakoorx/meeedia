@@ -6,6 +6,7 @@ export interface UserDetailsType {
   name?: string;
   email?: string;
   credits?: number;
+  refreshUserDetails: () => Promise<void>;
 }
 
 // Define the context value type
