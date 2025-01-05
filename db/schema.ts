@@ -1,4 +1,4 @@
-import { integer, jsonb, pgTable, varchar } from "drizzle-orm/pg-core";
+import { integer, jsonb, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const USER_TABLE = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -6,6 +6,7 @@ export const USER_TABLE = pgTable("users", {
   email: varchar({ length: 255 }).notNull().unique(),
   image: varchar(),
   credits: integer().default(10),
+  lastTokenRefresh: timestamp().defaultNow(),
 });
 
 export const VIDEO_RAW_TABLE = pgTable("video_raw", {
