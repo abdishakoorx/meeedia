@@ -41,34 +41,34 @@ const Dashboard = () => {
         </header>
 
         {/* Main Content Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Manual Creation Card */}
           <CreationCard
             href="/in/scratch-editor"
             icon={
               <Camera className="w-12 h-12 text-blue-600 dark:text-blue-400" />
             }
-            title="Create from Scratch"
-            description="Upload your content, select templates, and fully customize your video."
+            title="From Scratch"
+            description="Select frames, and fully customize your video."
             buttonText="Start from Scratch"
             buttonColor="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
             newUserTip="Best for users seeking full customization."
           />
 
           <CreationCard
-            href=""
+            href="/in/ai-editor"
             icon={
               <Sparkles className="w-12 h-12 text-purple-600 dark:text-purple-400" />
             }
-            title="AI-Powered Creation"
-            description="Generate videos with AI using your descriptions and preferences."
+            title="AI-Powered"
+            description="Generate videos with AI using your descriptions."
             buttonText="Generate with AI"
             buttonColor="bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600"
             newUserTip="Great for quick AI-generated videos."
           />
 
           <CreationCard
-            href=""
+            href="/in/projects"
             icon={
               <Grid3x3 className="w-12 h-12 text-green-600 dark:text-green-400" />
             }

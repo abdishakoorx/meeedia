@@ -12,10 +12,10 @@ const Header: React.FC<HeaderProps> = ({ headerName }) => {
 
   return (
     <header className="w-full flex justify-between items-center p-4 md:px-10 shadow-sm border-b border-gray-200 dark:border-gray-700">
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center">
         <button
           onClick={toggleSidebar}
-          className="lg:hidden text-gray-700 dark:text-gray-300 p-2 rounded-lg"
+          className="md:hidden text-gray-700 dark:text-gray-300 p-2 rounded-lg"
         >
           <SidebarOpen className="w-6 h-6" />
         </button>

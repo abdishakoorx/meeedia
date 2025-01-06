@@ -12,7 +12,7 @@ export default function InLayout({
     <DashboardProvider>
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 lg:pl-[var(--sidebar-width)] transition-all duration-300 ease-in-out">
+        <main className="flex-1 md:pl-[var(--sidebar-width)] transition-all duration-300 ease-in-out">
           {children}
         </main>
         <Toaster richColors />

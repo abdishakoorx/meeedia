@@ -157,11 +157,12 @@ const Sidebar: React.FC = () => {
                   }
                   ${!isMobile && isCollapsed ? "justify-center" : ""}`}
               >
-                <span className="mr-4">{item.icon}</span>
+                <span>{item.icon}</span>
                 <span
                   className={`
                     transition-all 
                     duration-300 
+                    ml-4
                     ${
                       !isMobile && isCollapsed
                         ? "opacity-0 absolute left-16 pointer-events-none"
@@ -177,41 +178,6 @@ const Sidebar: React.FC = () => {
         </div>
 
         <div className="mt-auto">
-          {/* <div className="p-4 border-t border-gray-300 dark:border-gray-700">
-            <div className="flex items-center justify-between mb-2">
-              {!isMobile && isCollapsed ? (
-                <Coins className="h-6 w-6 text-yellow-500" />
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <Coins className="h-5 w-5 text-yellow-500" />
-                  <p className="text-base font-bold text-gray-600 dark:text-gray-300">
-                    Tokens
-                  </p>
-                </div>
-              )}
-            </div>
-            <Progress
-              value={(userDetails?.credits ?? 0) * 10}
-              className="h-3 rounded-full bg-gray-200 dark:bg-gray-600"
-            >
-              <span className="sr-only">
-                {(userDetails?.credits ?? 0) * 10}% Tokens Used
-              </span>
-            </Progress>
-            {!isMobile && isCollapsed ? null : (
-              <>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                  {10 - (userDetails?.credits ?? 0)} tokens used.
-                </p>
-                {(userDetails?.credits ?? 0) < 3 && (
-                  <p className="text-xs text-red-500 dark:text-red-400 mt-1">
-                    Low tokens remaining! Consider upgrading your plan.
-                  </p>
-                )}
-              </>
-            )}
-          </div> */}
-
           <TokenRefresh isCollapsed={isCollapsed} isMobile={isMobile} />
 
           <div className="p-4 bg-gray-50 dark:bg-gray-900">
