@@ -108,10 +108,10 @@ const CreationCard: React.FC<CreationCardProps> = ({
 }) => {
   return (
     <motion.div
-      className="bg-gray-200 dark:bg-gray-900 shadow-sm dark:shadow-xl rounded-2xl p-6 transition-all duration-200 hover:shadow-md dark:hover:shadow-2xl"
+      className="bg-gray-200 dark:bg-gray-900 shadow-sm dark:shadow-xl rounded-2xl p-6 transition-all duration-200 hover:shadow-md dark:hover:shadow-2xl h-full"
       whileHover={{ y: -5 }}
     >
-      <Link href={href}>
+      <Link href={href} className="flex flex-col h-full">
         <div className="flex items-center justify-between mb-4">
           {icon}
           <TooltipProvider>
@@ -131,11 +131,13 @@ const CreationCard: React.FC<CreationCardProps> = ({
         <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm">
           {description}
         </p>
-        <Button
-          className={`w-full ${buttonColor} text-white py-2 rounded-lg transition-colors duration-200 text-sm font-medium`}
-        >
-          {buttonText}
-        </Button>
+        <div className="mt-auto">
+          <Button
+            className={`w-full ${buttonColor} text-white py-2 rounded-lg transition-colors duration-200 text-sm font-medium`}
+          >
+            {buttonText}
+          </Button>
+        </div>
       </Link>
     </motion.div>
   );
