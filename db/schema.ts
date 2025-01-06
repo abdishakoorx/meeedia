@@ -4,7 +4,6 @@ export const USER_TABLE = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
-  image: varchar(),
   credits: integer().default(10),
   lastTokenRefresh: timestamp().defaultNow(),
 });
