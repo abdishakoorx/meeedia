@@ -7,36 +7,36 @@ const testimonials = [
     name: "Sarah Johnson",
     role: "Marketing Director",
     company: "TechCorp",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "https://images.pexels.com/photos/3394658/pexels-photo-3394658.jpeg?auto=compress&cs=tinysrgb&w=600",
     quote: "This platform revolutionized our video marketing strategy. We've seen a 200% increase in engagement!",
     industry: "Technology",
     beforeAfter: {
-      before: "/placeholder.svg?height=150&width=270",
-      after: "/placeholder.svg?height=150&width=270"
+      before: "/sarBefore.png",
+      after: "/sarAfter.png"
     }
   },
   {
     name: "Michael Chen",
     role: "Content Creator",
     company: "LifestyleBlog",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "https://images.pexels.com/photos/27544052/pexels-photo-27544052/free-photo-of-a-man-with-long-hair-smiling-and-wearing-a-purple-shirt.jpeg?auto=compress&cs=tinysrgb&w=600",
     quote: "The AI tools save me hours of editing time. My content quality has improved dramatically.",
     industry: "Lifestyle",
     beforeAfter: {
-      before: "/placeholder.svg?height=150&width=270",
-      after: "/placeholder.svg?height=150&width=270"
+      before: "/chenBefore.png",
+      after: "/chenAfter.png"
     }
   },
   {
     name: "Emily Rodriguez",
     role: "Social Media Manager",
     company: "FashionBrand",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "https://images.pexels.com/photos/14610789/pexels-photo-14610789.jpeg?auto=compress&cs=tinysrgb&w=600",
     quote: "Our video views have tripled since we started using this platform. The custom design tools are a game-changer.",
     industry: "Fashion",
     beforeAfter: {
-      before: "/placeholder.svg?height=150&width=270",
-      after: "/placeholder.svg?height=150&width=270"
+      before: "/emilyBefore.png",
+      after: "/emilyAfter.png"
     }
   }
 ]
@@ -60,11 +60,11 @@ export default function UserSuccessStories() {
                   />
                   <div>
                     <h3 className="font-semibold">{testimonial.name}</h3>
-                    <p className="text-sm text-gray-600">{testimonial.role} at {testimonial.company}</p>
+                    <p className="text-sm text-gray-500">{testimonial.role} at {testimonial.company}</p>
                   </div>
                 </div>
-                <p className="text-gray-700 mb-4">&quot;{testimonial.quote}&quot;</p>
-                <Badge variant="secondary">{testimonial.industry}</Badge>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">&quot;{testimonial.quote}&quot;</p>
+                <Badge variant="secondary" className='text-white'>{testimonial.industry}</Badge>
                 <div className="mt-4 space-y-2">
                   <p className="text-sm font-semibold">Before / After:</p>
                   <div className="flex space-x-2">
@@ -92,15 +92,15 @@ export default function UserSuccessStories() {
           <h3 className="text-2xl font-semibold mb-4">Usage Statistics</h3>
           <div className="flex justify-center space-x-8">
             <div className="text-center">
-              <p className="text-4xl font-bold text-purple-600">500K+</p>
+              <p className="text-4xl font-bold text-primary dark:text-primary-dark">500K+</p>
               <p className="text-gray-600">Videos Created</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-purple-600">98%</p>
+              <p className="text-4xl font-bold text-primary dark:text-primary-dark">98%</p>
               <p className="text-gray-600">User Satisfaction</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-purple-600">50+</p>
+              <p className="text-4xl font-bold text-primary dark:text-primary-dark">50+</p>
               <p className="text-gray-600">Industries Served</p>
             </div>
           </div>
