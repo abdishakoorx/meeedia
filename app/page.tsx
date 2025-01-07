@@ -1,4 +1,3 @@
-import Header from './_components/NavHeader';
 import HeroSection from './_components/HeroSection';
 import KeyFeatures from './_components/KeyFeatures';
 import UserSuccessStories from './_components/UserSuccessStories';
@@ -8,12 +7,13 @@ import CommunityShowcase from './_components/CommunityShowcase';
 import ResourcesSupport from './_components/ResourcesSupport';
 import FinalCTA from './_components/FinalCTA';
 import Footer from './_components/Footer';
+import { FloatingNavDemo } from './_components/floating-navbar';
 
 export default function Home() {
   
   return (
     <div>
-      <Header/>
+      <FloatingNavDemo/>
       <HeroSection />
       <KeyFeatures />
       <UserSuccessStories />
