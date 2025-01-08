@@ -14,7 +14,7 @@ export default function Home() {
       <FloatingNavDemo />
       <HeroSection />
 
-      <main className="px-4 md:px-10">
+      <main className="px-4 md:px-10 space-y-6 my-6">
         <KeyFeatures />
         <UserSuccessStories />
         <PricingPlans />
