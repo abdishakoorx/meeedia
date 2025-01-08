@@ -18,8 +18,8 @@ export default function ResourcesSupport() {
             </CardHeader>
             <CardContent>
               <p className="mb-4">Learn how to create stunning videos with our step-by-step tutorials.</p>
-              <Button variant="outline" asChild>
-                <Link href="/tutorials">Watch Tutorials</Link>
+              <Button variant="outline" asChild className='text-black font-mono'>
+                <Link href="/">Watch Tutorials</Link>
               </Button>
             </CardContent>
           </Card>
@@ -32,8 +32,8 @@ export default function ResourcesSupport() {
             </CardHeader>
             <CardContent>
               <p className="mb-4">Explore our comprehensive documentation for in-depth guidance.</p>
-              <Button variant="outline" asChild>
-                <Link href="/docs">Read Docs</Link>
+              <Button variant="outline" asChild className='text-black font-mono'>
+                <Link href="/">Read Docs</Link>
               </Button>
             </CardContent>
           </Card>
@@ -46,8 +46,8 @@ export default function ResourcesSupport() {
             </CardHeader>
             <CardContent>
               <p className="mb-4">Join our vibrant community to share ideas and get help from peers.</p>
-              <Button variant="outline" asChild>
-                <Link href="/forum">Visit Forum</Link>
+              <Button variant="outline" asChild className='text-black font-mono'>
+                <Link href="/">Visit Forum</Link>
               </Button>
             </CardContent>
           </Card>
@@ -60,8 +60,8 @@ export default function ResourcesSupport() {
             </CardHeader>
             <CardContent>
               <p className="mb-4">Get personalized help from our dedicated support team.</p>
-              <Button variant="outline" asChild>
-                <Link href="/support">Contact Support</Link>
+              <Button variant="outline" asChild className='text-black font-mono'>
+                <Link href="/">Contact Support</Link>
               </Button>
             </CardContent>
           </Card>
