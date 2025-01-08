@@ -93,7 +93,7 @@ export default function PricingPlans() {
                 <CardHeader>
                   <CardTitle className="text-2xl font-bold text-center">{plan.name}</CardTitle>
                   {plan.name === 'Beta' && (
-                    <Badge variant="secondary" className="flex justify-end w-fit">
+                    <Badge variant="secondary" className="absolute top-4 right-4">
                       Current
                     </Badge>
                   )}
