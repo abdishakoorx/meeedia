@@ -159,10 +159,7 @@ const Sidebar: React.FC = () => {
               >
                 <span>{item.icon}</span>
                 <span
-                  className={`
-                    transition-all 
-                    duration-300 
-                    ml-4
+                  className={`transition-all duration-300 ml-4 font-mono
                     ${
                       !isMobile && isCollapsed
                         ? "opacity-0 absolute left-16 pointer-events-none"

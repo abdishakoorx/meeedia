@@ -5,8 +5,8 @@ interface FormData {
   targetAudience: string;
   duration: number;
   style: string;
-  colorPreference: string;
-  additionalNotes: string;
+  // colorPreference: string;
+  // additionalNotes: string;
   aspectRatio: string;
 }
 
@@ -49,7 +49,7 @@ export function generateAIPrompt(formData: FormData): string {
     - Target Audience: ${formData.targetAudience}
     - Tone: ${formData.tone}
     - Visual Style: ${formData.style}
-    - Color Scheme: ${formData.colorPreference || "Use appropriate colors that match the tone and purpose"}
+    
    
     Available Options:
     1. Patterns (use only these values for pattern property):
@@ -96,9 +96,7 @@ export function generateAIPrompt(formData: FormData): string {
          - Account for reading time and visual impact
          - Set appropriate animation delays
    
-    Additional Context:
-    ${formData.additionalNotes}
-   
+       
     Output Format:
     Provide a complete JSON structure following this schema, ensuring that:
     1. Every frame's "image" property is set to "/film.png"
