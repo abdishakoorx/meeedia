@@ -2,15 +2,12 @@ import { db } from '@/db';
 import { VIDEO_RAW_TABLE } from '@/db/schema';
 import { NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
-import type { NextRequest } from 'next/server';
 
-export async function DELETE(
-  request: NextRequest,
-  context: { params: { videoId: string } }
-) {
+export async function DELETE(request: Request) {
   try {
-    const { videoId } = await context.params;
-
+    // Get videoId from request body
+    const { videoId } = await request.json();
+    
     if (!videoId) {
       return NextResponse.json(
         { message: "Video ID is required" },

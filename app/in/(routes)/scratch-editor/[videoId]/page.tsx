@@ -23,11 +23,12 @@ export default function ScratchVideoEditor() {
   const params = useParams();
   const videoId = params.videoId as string;
 
-  // Fetch existing video data
+ 
+  // Update the fetchVideo function in useEffect
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const response = await fetch(`/api/video/${videoId}`);
+        const response = await fetch(`/api/video/data?videoId=${videoId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch video");
         }
@@ -55,21 +56,7 @@ export default function ScratchVideoEditor() {
     fetchVideo();
   }, [videoId, setVideoFrame]);
 
-  const handleStartEditTitle = () => {
-    setTempTitle(videoTitle);
-    setIsEditingTitle(true);
-  };
-
-  const handleSaveTitle = async () => {
-    if (tempTitle.trim() === "") {
-      toast.error("Title cannot be empty");
-      return;
-    }
-    setIsEditingTitle(false);
-    setVideoTitle(tempTitle);
-    await handleUpdate(tempTitle);
-  };
-
+  // Update the handleUpdate function
   const handleUpdate = useCallback(
     async (newTitle?: string) => {
       try {
@@ -98,7 +85,7 @@ export default function ScratchVideoEditor() {
           },
         };
 
-        const response = await fetch(`/api/video/${videoId}`, {
+        const response = await fetch("/api/video/data", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -122,6 +109,21 @@ export default function ScratchVideoEditor() {
     },
     [user, videoFrame, videoId, videoTitle]
   );
+
+  const handleStartEditTitle = () => {
+    setTempTitle(videoTitle);
+    setIsEditingTitle(true);
+  };
+
+  const handleSaveTitle = async () => {
+    if (tempTitle.trim() === "") {
+      toast.error("Title cannot be empty");
+      return;
+    }
+    setIsEditingTitle(false);
+    setVideoTitle(tempTitle);
+    await handleUpdate(tempTitle);
+  };
 
   if (isLoading) {
     return <CustomLoader />;

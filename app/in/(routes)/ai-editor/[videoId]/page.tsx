@@ -24,36 +24,91 @@ export default function AISavedVideoEditor() {
   const videoId = params.videoId as string;
 
   // Fetch existing video data
-  useEffect(() => {
-    const fetchVideo = async () => {
-      try {
-        const response = await fetch(`/api/video/${videoId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch video");
-        }
-
-        const data = await response.json();
-        if (data.result) {
-          setVideoTitle(data.result.title || "Untitled");
-          if (data.result.description) {
-            setVideoFrame({
-              frameList: data.result.description.frames || [],
-              totalDuration: data.result.description.totalDuration || 0,
-              selectedFrameIndex: 0,
-              aspectRatio: data.result.description.aspectRatio || "16:9",
-              audioTrack: data.result.description.audioTrack || "none",
-            });
-          }
-        }
-      } catch {
-        toast.error("Failed to load video");
-      } finally {
-        setIsLoading(false);
+// Update the fetchVideo function in useEffect
+useEffect(() => {
+  const fetchVideo = async () => {
+    try {
+      const response = await fetch(`/api/video/data?videoId=${videoId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch video");
       }
-    };
 
-    fetchVideo();
-  }, [videoId, setVideoFrame]);
+      const data = await response.json();
+      if (data.result) {
+        setVideoTitle(data.result.title || "Untitled");
+        if (data.result.description) {
+          setVideoFrame({
+            frameList: data.result.description.frames || [],
+            totalDuration: data.result.description.totalDuration || 0,
+            selectedFrameIndex: 0,
+            aspectRatio: data.result.description.aspectRatio || "16:9",
+            audioTrack: data.result.description.audioTrack || "none",
+          });
+        }
+      }
+    } catch {
+      toast.error("Failed to load video");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  fetchVideo();
+}, [videoId, setVideoFrame]);
+
+// Update the handleUpdate function
+const handleUpdate = useCallback(
+  async (newTitle?: string) => {
+    try {
+      if (!user?.primaryEmailAddress?.emailAddress) {
+        toast.error("Please sign in to update your video");
+        return;
+      }
+
+      if (!videoFrame?.frameList || videoFrame.frameList.length === 0) {
+        toast.error("Add at least one frame before saving");
+        return;
+      }
+
+      setIsSaving(true);
+
+      const updateData = {
+        video_id: videoId,
+        user_email: user.primaryEmailAddress.emailAddress,
+        video_type: "From scratch",
+        title: newTitle || videoTitle,
+        description: {
+          frames: videoFrame.frameList,
+          totalDuration: videoFrame.totalDuration,
+          aspectRatio: videoFrame.aspectRatio,
+          audioTrack: videoFrame.audioTrack,
+        },
+      };
+
+      const response = await fetch('/api/video/data', {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update video");
+      }
+
+      toast.success("Video updated successfully");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to update video"
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  },
+  [user, videoFrame, videoId, videoTitle]
+);
 
   const handleStartEditTitle = () => {
     setTempTitle(videoTitle);
@@ -69,59 +124,6 @@ export default function AISavedVideoEditor() {
     setVideoTitle(tempTitle);
     await handleUpdate(tempTitle);
   };
-
-  const handleUpdate = useCallback(
-    async (newTitle?: string) => {
-      try {
-        if (!user?.primaryEmailAddress?.emailAddress) {
-          toast.error("Please sign in to update your video");
-          return;
-        }
-
-        if (!videoFrame?.frameList || videoFrame.frameList.length === 0) {
-          toast.error("Add at least one frame before saving");
-          return;
-        }
-
-        setIsSaving(true);
-
-        const updateData = {
-          video_id: videoId,
-          user_email: user.primaryEmailAddress.emailAddress,
-          video_type: "From scratch",
-          title: newTitle || videoTitle,
-          description: {
-            frames: videoFrame.frameList,
-            totalDuration: videoFrame.totalDuration,
-            aspectRatio: videoFrame.aspectRatio,
-            audioTrack: videoFrame.audioTrack,
-          },
-        };
-
-        const response = await fetch(`/api/video/${videoId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updateData),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to update video");
-        }
-
-        toast.success("Video updated successfully");
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : "Failed to update video"
-        );
-      } finally {
-        setIsSaving(false);
-      }
-    },
-    [user, videoFrame, videoId, videoTitle]
-  );
 
   if (isLoading) {
     return <CustomLoader />;

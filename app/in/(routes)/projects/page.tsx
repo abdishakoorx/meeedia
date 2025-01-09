@@ -202,8 +202,14 @@ function Projects() {
 
     setIsDeleting(true);
     try {
-      const response = await fetch(`/api/delete-video/${video.videoID}`, {
+      const response = await fetch("/api/delete-video", {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          videoId: video.videoID,
+        }),
       });
 
       if (response.ok) {
