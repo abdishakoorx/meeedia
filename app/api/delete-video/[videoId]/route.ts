@@ -1,15 +1,15 @@
-// app/api/video/[videoId]/route.ts
 import { db } from '@/db';
 import { VIDEO_RAW_TABLE } from '@/db/schema';
 import { NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
+import type { NextRequest } from 'next/server';
 
 export async function DELETE(
-  request: Request,
-  { params }: { params: { videoId: string } }
+  request: NextRequest,
+  context: { params: { videoId: string } }
 ) {
   try {
-    const videoId = params.videoId;
+    const { videoId } = await context.params;
 
     if (!videoId) {
       return NextResponse.json(
