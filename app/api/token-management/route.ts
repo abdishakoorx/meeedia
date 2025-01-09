@@ -1,55 +1,34 @@
-import { db } from '@/db';
-import { USER_TABLE } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { NextResponse } from 'next/server';
+import { checkUserTokens, deductTokens } from '@/app/utils/token-management';
 
-const TOKENS_PER_VIDEO = 3;
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const email = searchParams.get('email');
 
-export interface TokenCheckResult {
-  hasEnoughTokens: boolean;
-  currentTokens: number;
-  requiredTokens: number;
+  if (!email) {
+    return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+  }
+
+  try {
+    const result = await checkUserTokens(email);
+    return NextResponse.json(result);
+  } catch {
+    return NextResponse.json({ error: 'Failed to check tokens' }, { status: 500 });
+  }
 }
 
-export async function checkUserTokens(email: string): Promise<TokenCheckResult> {
-  const user = await db.select({
-    credits: USER_TABLE.credits
-  })
-  .from(USER_TABLE)
-  .where(eq(USER_TABLE.email, email))
-  .limit(1);
+export async function POST(request: Request) {
+  try {
+    const { email } = await request.json();
 
-  if (!user || user.length === 0) {
-    throw new Error('User not found');
+    if (!email) {
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+    }
+
+    const newBalance = await deductTokens(email);
+    return NextResponse.json({ success: true, newBalance });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Failed to deduct tokens';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const currentTokens = user[0].credits ?? 0;
-  return {
-    hasEnoughTokens: currentTokens >= TOKENS_PER_VIDEO,
-    currentTokens,
-    requiredTokens: TOKENS_PER_VIDEO
-  };
-}
-
-export async function deductTokens(email: string): Promise<number> {
-  // First, get current tokens to ensure we have enough
-  const currentTokens = await checkUserTokens(email);
-  
-  if (!currentTokens.hasEnoughTokens) {
-    throw new Error(`Insufficient tokens. Required: ${TOKENS_PER_VIDEO}, Available: ${currentTokens.currentTokens}`);
-  }
-
-  // Then perform the update
-  const result = await db
-    .update(USER_TABLE)
-    .set({
-      credits: currentTokens.currentTokens - TOKENS_PER_VIDEO
-    })
-    .where(eq(USER_TABLE.email, email))
-    .returning({ newBalance: USER_TABLE.credits });
-
-  if (!result || result.length === 0) {
-    throw new Error('Failed to update tokens');
-  }
-
-  return result[0].newBalance ?? 0;
 }

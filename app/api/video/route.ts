@@ -2,7 +2,7 @@ import { db } from '@/db';
 import { VIDEO_RAW_TABLE } from '@/db/schema';
 import { NextResponse } from 'next/server';
 import { eq } from 'drizzle-orm';
-import { checkUserTokens, deductTokens } from '../token-management/route';
+import { checkUserTokens, deductTokens } from '@/app/utils/token-management';
 
 export async function POST(req: Request) {
     try {
