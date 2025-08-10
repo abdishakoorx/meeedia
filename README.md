@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Meeedia 🎬
 
-## Getting Started
+**AI-Powered Video Creation Platform**
 
-First, run the development server:
+[Live Demo](https://meeeedia.vercel.app/) 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Meeedia is a cutting-edge video creation platform that harnesses the power of AI to transform simple prompts into professional videos. Built for creators, marketers, and businesses looking to streamline their video production workflow.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **AI-Powered Video Generation** - Transform text prompts into engaging videos using Gemini AI
+- **Real-time Video Editing** - Professional video playback and editing capabilities
+- **User Authentication** - Secure sign-in/sign-up with Clerk
+- **Responsive Design** - Seamless experience across all devices
+- **Fast Performance** - Optimized for speed and reliability
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend:** Next.js, React, Tailwind CSS
+- **UI Components:** shadcn/ui
+- **Authentication:** Clerk
+- **Database:** Drizzle ORM with NeonDB (PostgreSQL)
+- **Video Processing:** Remotion
+- **AI Integration:** Google Gemini AI
+- **Deployment:** Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Live Demo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Experience Meeedia in action: [meeeedia.vercel.app](https://meeeedia.vercel.app/)
 
-## Deploy on Vercel
+## 🎯 What This Project Demonstrates
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Full-stack development with modern React ecosystem
+- Video processing and manipulation
+- Database design and ORM implementation
+- Authentication and user management
+- Production deployment and optimization
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+*Built with ❤️ using the latest web technologies*
