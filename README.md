@@ -2,8 +2,6 @@
 
 **AI-Powered Video Creation Platform**
 
-[Live Demo](https://meeeedia.vercel.app/) 
-
 ## Overview
 
 Meeedia is a cutting-edge video creation platform that harnesses the power of AI to transform simple prompts into professional videos. Built for creators, marketers, and businesses looking to streamline their video production workflow.
@@ -25,10 +23,6 @@ Meeedia is a cutting-edge video creation platform that harnesses the power of AI
 - **Video Processing:** Remotion
 - **AI Integration:** Google Gemini AI
 - **Deployment:** Vercel
-
-## 🚀 Live Demo
-
-Experience Meeedia in action: [meeeedia.vercel.app](https://meeeedia.vercel.app/)
 
 ## 🎯 What This Project Demonstrates
 
